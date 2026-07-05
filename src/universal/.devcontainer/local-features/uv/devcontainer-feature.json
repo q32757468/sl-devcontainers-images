@@ -1,0 +1,7 @@
+{
+    "id": "uv",
+    "name": "uv",
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/python"
+    ]
+}

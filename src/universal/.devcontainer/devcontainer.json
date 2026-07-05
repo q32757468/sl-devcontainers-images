@@ -1,0 +1,39 @@
+{
+    "build": {
+        "dockerfile": "./Dockerfile",
+        "context": "."
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "24",
+            "additionalVersions": "22",
+            "nodeGypDependencies": true
+        },
+        "./local-features/pnpm": "latest",
+        "ghcr.io/devcontainers/features/python:1": {
+            "version": "3.12",
+            "useOryxIfAvailable": "false"
+        },
+        "./local-features/uv": "latest",
+        "ghcr.io/devcontainers/features/rust:1": {
+            "version": "stable",
+            "profile": "complete"
+        }
+    },
+    "overrideFeatureInstallOrder": [
+        "ghcr.io/devcontainers/features/node",
+        "./local-features/pnpm",
+        "ghcr.io/devcontainers/features/python",
+        "./local-features/uv",
+        "ghcr.io/devcontainers/features/rust"
+    ],
+    "remoteUser": "hsl",
+    "containerUser": "hsl",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "rust-lang.rust-analyzer"
+            ]
+        }
+    }
+}

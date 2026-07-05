@@ -1,0 +1,9 @@
+{
+	"scripts": {
+		"build:universal": "node scripts/build.mjs universal",
+		"test:universal": "node scripts/test.mjs universal"
+	},
+	"devDependencies": {
+		"@devcontainers/cli": "^0.87.0"
+	}
+}
