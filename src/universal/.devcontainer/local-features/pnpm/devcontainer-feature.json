@@ -1,4 +1,8 @@
 {
     "id": "pnpm",
-    "name": "pnpm"
+    "name": "pnpm",
+    "containerEnv": {
+        "PNPM_HOME": "/usr/local/share/pnpm",
+        "PATH": "/usr/local/share/pnpm/bin:${PATH}"
+    }
 }

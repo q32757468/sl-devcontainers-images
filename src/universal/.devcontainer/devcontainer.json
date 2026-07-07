@@ -10,11 +10,12 @@
             "npmVersion": "latest",
             "pnpmVersion": "none"
         },
+        "./local-features/pnpm": "latest",
+        "./local-features/claude-code": "latest",
         "ghcr.io/devcontainers/features/python:1": {
             "version": "3.12",
             "useOryxIfAvailable": "false"
         },
-        "./local-features/pnpm": "latest",
         "./local-features/uv": "latest",
         "ghcr.io/devcontainers/features/rust:1": {
             "version": "stable",
@@ -24,14 +25,11 @@
     "overrideFeatureInstallOrder": [
         "ghcr.io/devcontainers/features/node",
         "./local-features/pnpm",
+        "./local-features/claude-code",
         "ghcr.io/devcontainers/features/python",
         "./local-features/uv",
         "ghcr.io/devcontainers/features/rust"
     ],
-    "mounts": [
-        "source=${localEnv:HOME}/.claude,target=/tmp/claude-host,type=bind,readonly"
-    ],
-    "postStartCommand": "mkdir -p /home/hsl/.claude && cp --update=none /tmp/claude-host/settings.json /home/hsl/.claude/settings.json",
     "remoteUser": "hsl",
     "containerUser": "hsl",
     "customizations": {

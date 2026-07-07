@@ -1,0 +1,12 @@
+{
+    "id": "claude-code",
+    "name": "Claude Code",
+    "installsAfter": [
+        "./local-features/pnpm"
+    ],
+    "mounts": [
+        "source=${localEnv:HOME}/.claude,target=/tmp/claude-host,type=bind,readonly",
+        "source=claude-code-config,target=${localEnv:HOME}/.claude,type=volume"
+    ],
+    "postStartCommand": "mkdir -p $HOME/.claude && cp --update=none /tmp/claude-host/settings.json $HOME/.claude/settings.json"
+}
