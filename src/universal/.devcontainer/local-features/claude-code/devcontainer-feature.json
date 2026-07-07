@@ -5,8 +5,13 @@
         "./local-features/pnpm"
     ],
     "mounts": [
+        // readonly 只有字符串形式支持，虽然schema上显示不支持，但是实际是支持字符串形式
         "source=${localEnv:HOME}/.claude,target=/tmp/claude-host,type=bind,readonly",
-        "source=claude-code-config,target=${localEnv:HOME}/.claude,type=volume"
+        {
+            "source": "claude-code-config",
+            "target": "${localEnv:HOME}/.claude",
+            "type": "volume"
+        }
     ],
     "postStartCommand": "mkdir -p $HOME/.claude && cp --update=none /tmp/claude-host/settings.json $HOME/.claude/settings.json"
 }
