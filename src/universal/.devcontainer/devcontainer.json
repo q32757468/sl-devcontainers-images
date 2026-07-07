@@ -25,11 +25,11 @@
     },
     "overrideFeatureInstallOrder": [
         "ghcr.io/devcontainers/features/node",
-        "./local-features/pnpm",
-        "./local-features/claude-code",
         "ghcr.io/devcontainers/features/python",
+        "ghcr.io/devcontainers/features/rust",
+        "./local-features/pnpm",
         "./local-features/uv",
-        "ghcr.io/devcontainers/features/rust"
+        "./local-features/claude-code"
     ],
     "remoteUser": "hsl",
     "containerUser": "hsl",

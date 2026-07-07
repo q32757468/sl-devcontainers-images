@@ -19,7 +19,9 @@ chown -R "${USERNAME}:${USERNAME}" "${USER_HOME}/.claude"
 cat > "${USER_HOME}/.claude.json" << 'EOF'
 {
   "shiftEnterKeyBindingInstalled": true,
-  "hasCompletedOnboarding": true
+  "hasCompletedOnboarding": true,
+  "autoUpdates": false,
+  "autoInstallIdeExtension": false
 }
 EOF
 chown "${USERNAME}:${USERNAME}" "${USER_HOME}/.claude.json"
