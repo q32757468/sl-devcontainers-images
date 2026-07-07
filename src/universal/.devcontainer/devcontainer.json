@@ -7,13 +7,13 @@
         "ghcr.io/devcontainers/features/node:2": {
             "version": "24",
             "additionalVersions": "22",
-            "nodeGypDependencies": true,
-            "pnpmVersion": "latest"
+            "nodeGypDependencies": true
         },
         "ghcr.io/devcontainers/features/python:1": {
             "version": "3.12",
             "useOryxIfAvailable": "false"
         },
+        "./local-features/pnpm": "latest",
         "./local-features/uv": "latest",
         "ghcr.io/devcontainers/features/rust:1": {
             "version": "stable",
@@ -22,6 +22,7 @@
     },
     "overrideFeatureInstallOrder": [
         "ghcr.io/devcontainers/features/node",
+        "./local-features/pnpm",
         "ghcr.io/devcontainers/features/python",
         "./local-features/uv",
         "ghcr.io/devcontainers/features/rust"
