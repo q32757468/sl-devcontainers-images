@@ -31,6 +31,7 @@
     "customizations": {
         "vscode": {
             "extensions": [
+                "-dbaeumer.vscode-eslint",
                 "eamodio.gitlens",
                 "esbenp.prettier-vscode",
                 "chrisvltn.log-wrapper-for-vscode"
