@@ -26,6 +26,10 @@
         "./local-features/uv",
         "ghcr.io/devcontainers/features/rust"
     ],
+    "mounts": [
+        "source=${localEnv:HOME}/.claude,target=/tmp/claude-host,type=bind,readonly"
+    ],
+    "postStartCommand": "mkdir -p /home/hsl/.claude && cp --update=none /tmp/claude-host/settings.json /home/hsl/.claude/settings.json",
     "remoteUser": "hsl",
     "containerUser": "hsl",
     "customizations": {
