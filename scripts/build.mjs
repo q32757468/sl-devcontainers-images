@@ -8,7 +8,7 @@ const projectDir = resolve(__dirname, "..");
 
 const image = process.argv[2] || "universal";
 const workspace = `src/${image}`;
-const imageName = `hsl-${image}-image`;
+const imageName = `sl-${image}-image`;
 
 function run(cmd, args = []) {
   console.log(`\n$ ${cmd} ${args.join(" ")}`);
