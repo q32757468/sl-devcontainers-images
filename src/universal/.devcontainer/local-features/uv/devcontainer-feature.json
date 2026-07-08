@@ -1,7 +1,9 @@
 {
     "id": "uv",
     "name": "uv",
-    "installsAfter": [
-        "ghcr.io/devcontainers/features/python"
-    ]
+    "containerEnv": {
+        "UV_INSTALL_DIR": "/usr/local/share/uv",
+        "PATH": "/usr/local/share/uv:${PATH}",
+        "UV_INDEX_URL": "https://pypi.tuna.tsinghua.edu.cn/simple"
+    }
 }

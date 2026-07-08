@@ -1,8 +1,8 @@
 {
     "id": "patch-node",
     "version": "1.0.0",
-    "name": "Patch Node.js mirrors",
-    "description": "Configure npm/pnpm registry mirrors for Chinese mainland users",
+    "name": "Patch Node.js",
+    "description": "Configure Node.js ecosystem for Chinese mainland users",
     "installsAfter": [
         "./local-features/user",
         "ghcr.io/devcontainers/features/node"

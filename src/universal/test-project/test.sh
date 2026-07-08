@@ -35,13 +35,13 @@ check "default-node-version" bash -c "node --version | grep 24."
 # ------------------------------------------------------------------
 check "python3" python3 --version
 check "pip3" pip3 --version
-# check "uv" uv --version
+check "uv" uv --version
 
 # Verify system Python is 3.12
 check "python-3.12" bash -c "python3 --version | grep '3\.12'"
 
 # Test uv can create a venv and install a package
-# check "uv-venv" bash -c "cd /tmp && uv venv --python python3 /tmp/test-uv-venv && rm -rf /tmp/test-uv-venv"
+check "uv-venv" bash -c "cd /tmp && uv venv --python python3 /tmp/test-uv-venv && rm -rf /tmp/test-uv-venv"
 
 # ------------------------------------------------------------------
 # Rust

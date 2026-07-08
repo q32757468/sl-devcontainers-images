@@ -27,6 +27,7 @@
         },
         "./local-features/pnpm": "latest",
         "./local-features/patch-node": "latest",
+        "./local-features/patch-python": "latest",
         "./local-features/claude-code": "latest"
     },
     "overrideFeatureInstallOrder": [
@@ -35,8 +36,9 @@
         "ghcr.io/devcontainers/features/python",
         "ghcr.io/devcontainers/features/rust",
         "./local-features/pnpm",
-        "./local-features/patch-node",
         "./local-features/uv",
+        "./local-features/patch-node",
+        "./local-features/patch-python",
         "./local-features/claude-code"
     ],
     "remoteUser": "hsl",

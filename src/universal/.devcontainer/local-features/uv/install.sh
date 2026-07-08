@@ -2,6 +2,12 @@
 set -e
 
 echo "(*) Installing uv..."
-# TODO: 不绑定python的安装方式
-pip install uv
+
+export UV_INSTALL_DIR="/usr/local/share/uv"
+export INSTALLER_NO_MODIFY_PATH=1
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+USERNAME="${USERNAME:-"${_REMOTE_USER:-"codespace"}"}"
+chown -R "${USERNAME}" "${UV_INSTALL_DIR}"
+
 echo "Done!"
