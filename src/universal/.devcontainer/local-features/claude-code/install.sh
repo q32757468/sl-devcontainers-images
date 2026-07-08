@@ -6,8 +6,8 @@ echo "(*) Installing Claude Code..."
 # Install Claude Code globally via pnpm
 pnpm --allow-build=@anthropic-ai/claude-code add -g @anthropic-ai/claude-code
 
-# Resolve container username (falls back to "hsl")
-USERNAME="${USERNAME:-"${_REMOTE_USER:-"hsl"}"}"
+# Resolve container username (falls back to "codespace")
+USERNAME="${USERNAME:-"${_REMOTE_USER:-"codespace"}"}"
 USER_HOME=$(getent passwd "${USERNAME}" | cut -d: -f6)
 
 # Pre-create .claude config directory with correct ownership

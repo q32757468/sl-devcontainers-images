@@ -1,6 +1,5 @@
 #!/bin/bash
 SCRIPT_FOLDER="$(cd "$(dirname $0)" && pwd)"
-USERNAME=${1:-hsl}
 
 if [ -z $HOME ]; then
     HOME="/root"

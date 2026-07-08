@@ -4,6 +4,11 @@
         "context": "."
     },
     "features": {
+        "./local-features/user": {
+            "username": "hsl",
+            "userUid": "1000",
+            "userGid": "1000"
+        },
         "ghcr.io/devcontainers/features/node:2": {
             "version": "24",
             "additionalVersions": "22",
@@ -21,13 +26,16 @@
             "profile": "complete"
         },
         "./local-features/pnpm": "latest",
+        "./local-features/patch-node": "latest",
         "./local-features/claude-code": "latest"
     },
     "overrideFeatureInstallOrder": [
+        "./local-features/user",
         "ghcr.io/devcontainers/features/node",
         "ghcr.io/devcontainers/features/python",
         "ghcr.io/devcontainers/features/rust",
         "./local-features/pnpm",
+        "./local-features/patch-node",
         "./local-features/uv",
         "./local-features/claude-code"
     ],
