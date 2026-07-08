@@ -20,7 +20,7 @@
             "useOryxIfAvailable": "false",
             "installTools": false
         },
-        // "./local-features/uv": "latest",
+        "./local-features/uv": "latest",
         "ghcr.io/devcontainers/features/rust:1": {
             "version": "stable",
             "profile": "complete"
