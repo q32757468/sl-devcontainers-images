@@ -1,0 +1,17 @@
+{
+    "id": "codex",
+    "name": "Codex",
+    "installsAfter": [
+        "./local-features/pnpm"
+    ],
+    "mounts": [
+        // readonly 只有字符串形式支持，虽然schema上显示不支持，但是实际是支持字符串形式
+        "source=${localEnv:HOME}/.codex,target=/tmp/codex-host,type=bind,readonly",
+        {
+            "source": "codex-config",
+            "target": "${localEnv:HOME}/.codex",
+            "type": "volume"
+        }
+    ],
+    "postStartCommand": "mkdir -p $HOME/.codex\n[ -f /tmp/codex-host/auth.json ] && cp /tmp/codex-host/auth.json $HOME/.codex/auth.json"
+}

@@ -21,6 +21,7 @@ check "node" node --version
 check "npm" npm --version
 check "nvm" bash -c ". /usr/local/share/nvm/nvm.sh && nvm --version"
 check "pnpm" pnpm --version
+check "codex" codex --version
 
 # Verify two Node versions installed
 count=$(ls /usr/local/share/nvm/versions/node | wc -l)
