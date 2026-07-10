@@ -3,10 +3,15 @@ set -e
 
 echo "(*) Installing Codex..."
 
-pnpm add -g @openai/codex
-
 USERNAME="${USERNAME:-"${_REMOTE_USER:-"codespace"}"}"
 USER_HOME=$(getent passwd "${USERNAME}" | cut -d: -f6)
+
+# Feature install scripts run as root.  Install the global package as the
+# container user so that pnpm's node_modules and its contents remain writable
+# by that user after the container starts.
+runuser -u "${USERNAME}" -- env \
+    HOME="${USER_HOME}" \
+    pnpm add -g @openai/codex
 
 # Pre-create .codex config directory with correct ownership
 # Docker named volumes inherit permissions from the image layer on first mount

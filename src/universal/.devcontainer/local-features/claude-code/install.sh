@@ -3,12 +3,15 @@ set -e
 
 echo "(*) Installing Claude Code..."
 
-# Install Claude Code globally via pnpm
-pnpm --allow-build=@anthropic-ai/claude-code add -g @anthropic-ai/claude-code
-
 # Resolve container username (falls back to "codespace")
 USERNAME="${USERNAME:-"${_REMOTE_USER:-"codespace"}"}"
 USER_HOME=$(getent passwd "${USERNAME}" | cut -d: -f6)
+
+# Feature install scripts run as root. Install the global package as the
+# container user so that pnpm's node_modules stays writable after startup.
+runuser -u "${USERNAME}" -- env \
+  HOME="${USER_HOME}" \
+  pnpm --allow-build=@anthropic-ai/claude-code add -g @anthropic-ai/claude-code
 
 # Pre-create .claude config directory with correct ownership
 # Docker named volumes inherit permissions from the image layer on first mount
