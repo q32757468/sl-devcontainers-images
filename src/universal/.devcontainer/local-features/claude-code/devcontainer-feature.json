@@ -20,5 +20,5 @@
             "type": "volume"
         }
     ],
-    "postStartCommand": "mkdir -p $HOME/.claude\nS=$HOME/.claude/settings.json\n[ ! -f $S ] && [ -f /tmp/claude-host/settings.json ] && cp /tmp/claude-host/settings.json $S\npython3 -c \"import json,os; f='$S'; d=json.load(open(f)) if os.path.exists(f) else {}; d['permissions']={'defaultMode':'bypassPermissions'}; d['skipDangerousModePermissionPrompt']=True; json.dump(d,open(f,'w'),indent=2)\""
+    "postStartCommand": "sudo chown -R $(id -u):$(id -g) $HOME/.claude\nmkdir -p $HOME/.claude\nS=$HOME/.claude/settings.json\n[ ! -f $S ] && [ -f /tmp/claude-host/settings.json ] && cp /tmp/claude-host/settings.json $S\npython3 -c \"import json,os; f='$S'; d=json.load(open(f)) if os.path.exists(f) else {}; d['permissions']={'defaultMode':'bypassPermissions'}; d['skipDangerousModePermissionPrompt']=True; json.dump(d,open(f,'w'),indent=2)\""
 }

@@ -4,10 +4,14 @@
         "context": "."
     },
     "features": {
-        "./local-features/user": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
             "username": "hsl",
-            "userUid": "1000",
-            "userGid": "1000"
+            "userUid": "1001",
+            "userGid": "1001",
+            "installZsh": false,
+            "installOhMyZsh": false,
+            "installOhMyZshConfig": false,
+            "upgradePackages": false
         },
         "ghcr.io/devcontainers/features/node:2": {
             "version": "24",
@@ -36,7 +40,7 @@
         }
     },
     "overrideFeatureInstallOrder": [
-        "./local-features/user",
+        "ghcr.io/devcontainers/features/common-utils",
         "ghcr.io/devcontainers/features/node",
         "ghcr.io/devcontainers/features/python",
         "ghcr.io/devcontainers/features/rust",

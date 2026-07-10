@@ -20,5 +20,5 @@
             "type": "volume"
         }
     ],
-    "postStartCommand": "mkdir -p $HOME/.codex\n[ -f /tmp/codex-host/auth.json ] && cp /tmp/codex-host/auth.json $HOME/.codex/auth.json"
+    "postStartCommand": "sudo chown -R $(id -u):$(id -g) $HOME/.codex\nmkdir -p $HOME/.codex\n[ -f /tmp/codex-host/auth.json ] && cp /tmp/codex-host/auth.json $HOME/.codex/auth.json"
 }
