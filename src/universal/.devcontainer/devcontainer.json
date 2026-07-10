@@ -6,8 +6,8 @@
     "features": {
         "ghcr.io/devcontainers/features/common-utils:2": {
             "username": "hsl",
-            "userUid": "1001",
-            "userGid": "1001",
+            "userUid": "1000",
+            "userGid": "1000",
             "installZsh": false,
             "installOhMyZsh": false,
             "installOhMyZshConfig": false,
