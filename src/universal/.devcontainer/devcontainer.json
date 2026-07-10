@@ -28,8 +28,12 @@
         "./local-features/pnpm": "latest",
         "./local-features/patch-node": "latest",
         "./local-features/patch-python": "latest",
-        "./local-features/claude-code": "latest",
-        "./local-features/codex": "latest"
+        "./local-features/claude-code": {
+            "cacheBuster": "1"
+        },
+        "./local-features/codex": {
+            "cacheBuster": "1"
+        }
     },
     "overrideFeatureInstallOrder": [
         "./local-features/user",

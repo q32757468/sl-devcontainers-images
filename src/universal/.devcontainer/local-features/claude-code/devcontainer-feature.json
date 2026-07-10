@@ -4,6 +4,13 @@
     "installsAfter": [
         "./local-features/pnpm"
     ],
+    "options": {
+        "cacheBuster": {
+            "type": "string",
+            "default": "",
+            "description": "Change this value to force a fresh Claude Code installation during image builds."
+        }
+    },
     "mounts": [
         // readonly 只有字符串形式支持，虽然schema上显示不支持，但是实际是支持字符串形式
         "source=${localEnv:HOME}/.claude,target=/tmp/claude-host,type=bind,readonly",
