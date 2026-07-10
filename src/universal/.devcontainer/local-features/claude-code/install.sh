@@ -11,7 +11,7 @@ USER_HOME=$(getent passwd "${USERNAME}" | cut -d: -f6)
 # container user so that pnpm's node_modules stays writable after startup.
 runuser -u "${USERNAME}" -- env \
   HOME="${USER_HOME}" \
-  pnpm --allow-build=@anthropic-ai/claude-code add -g @anthropic-ai/claude-code
+  pnpm --config.minimumReleaseAge=0 --allow-build=@anthropic-ai/claude-code add -g @anthropic-ai/claude-code
 
 # Pre-create .claude config directory with correct ownership
 # Docker named volumes inherit permissions from the image layer on first mount
