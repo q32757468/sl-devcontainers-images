@@ -3,6 +3,13 @@
         "dockerfile": "./Dockerfile",
         "context": "."
     },
+    "mounts": [
+        "source=${localEnv:HOME}/.ssh/agent.sock,target=/tmp/ssh-agent.sock,type=bind"
+    ],
+    "remoteEnv": {
+        // 使用 remoteEnv 而不是 containerEnv 防止出现基于变量名的安全警告，实际无风险
+        "SSH_AUTH_SOCK": "/tmp/ssh-agent.sock"
+    },
     "features": {
         "ghcr.io/devcontainers/features/common-utils:2": {
             "username": "hsl",
