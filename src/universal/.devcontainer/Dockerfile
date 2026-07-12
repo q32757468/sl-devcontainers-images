@@ -1,7 +1,8 @@
 FROM ubuntu:noble
 
 ENV LANG=C.UTF-8 \
-    DEBIAN_FRONTEND=noninteractive
+    DEBIAN_FRONTEND=noninteractive \
+    TZ=Asia/Shanghai
 
 # Free the host-matching UID/GID before common-utils creates hsl:1000:1000.
 RUN if id "ubuntu" &>/dev/null; then \
@@ -19,6 +20,9 @@ RUN apt-get update \
         ca-certificates \
         git \
         sudo \
+        tzdata \
+    && ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime \
+    && echo ${TZ} > /etc/timezone \
     && apt-get autoremove -y && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 

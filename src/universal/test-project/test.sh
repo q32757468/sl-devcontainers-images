@@ -8,6 +8,7 @@ source test-utils.sh
 # ------------------------------------------------------------------
 check "non-root-user" id hsl
 check "locale" [ $(locale -a | grep C.utf8) ]
+check "timezone" [ "$(readlink -f /etc/localtime)" = "/usr/share/zoneinfo/Asia/Shanghai" ]
 check "sudo" sudo echo "sudo works."
 check "bash" bash --version
 
