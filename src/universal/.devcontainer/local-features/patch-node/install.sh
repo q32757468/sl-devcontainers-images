@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 set -e
 
-echo "(*) Patching Node.js registry mirrors..."
+echo "(*) Patching npm registry mirrors..."
 
 USERNAME="${USERNAME:-"${_REMOTE_USER:-"codespace"}"}"
 USER_HOME=$(getent passwd "${USERNAME}" | cut -d: -f6)
 
 # npm mirror
-echo 'registry=https://registry.npmmirror.com/' > "${USER_HOME}/.npmrc"
-chown "${USERNAME}:${USERNAME}" "${USER_HOME}/.npmrc"
+runuser -u "${USERNAME}" -- env \
+    HOME="${USER_HOME}" \
+    PATH="${PATH}" \
+    npm config set registry https://registry.npmmirror.com/
 
 echo "Done!"
