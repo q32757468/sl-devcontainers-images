@@ -4,7 +4,6 @@
     "name": "Patch Python",
     "description": "Configure Python ecosystem for Chinese mainland users",
     "installsAfter": [
-        "./local-features/user",
         "ghcr.io/devcontainers/features/python"
     ]
 }

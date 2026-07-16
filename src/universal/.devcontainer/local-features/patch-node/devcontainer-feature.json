@@ -4,7 +4,6 @@
     "name": "Patch Node.js",
     "description": "Configure Node.js ecosystem for Chinese mainland users",
     "installsAfter": [
-        "./local-features/user",
         "ghcr.io/devcontainers/features/node"
     ]
 }
