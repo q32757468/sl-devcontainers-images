@@ -40,10 +40,10 @@
         "./local-features/patch-node": "latest",
         "./local-features/patch-python": "latest",
         "./local-features/claude-code": {
-            "cacheBuster": "1.2"
+            "cacheBuster": "1.3"
         },
         "./local-features/codex": {
-            "cacheBuster": "1.2"
+            "cacheBuster": "1.3"
         }
     },
     "overrideFeatureInstallOrder": [
