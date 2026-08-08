@@ -36,7 +36,9 @@
             "version": "stable",
             "profile": "complete"
         },
-        "./local-features/pnpm": "latest",
+        "./local-features/pnpm": {
+            "cacheBuster": "1"
+        },
         "./local-features/agent-skills": "latest",
         "./local-features/patch-node": "latest",
         "./local-features/patch-python": "latest",

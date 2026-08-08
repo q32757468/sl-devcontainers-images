@@ -2,6 +2,13 @@
     "id": "pnpm",
     "version": "1.0.0",
     "name": "pnpm",
+    "options": {
+        "cacheBuster": {
+            "type": "string",
+            "default": "",
+            "description": "Change this value to force a fresh pnpm installation during image builds."
+        }
+    },
     "containerEnv": {
         "PNPM_HOME": "/usr/local/share/pnpm",
         "PATH": "/usr/local/share/pnpm/bin:${PATH}"
