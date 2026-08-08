@@ -18,15 +18,27 @@ function run(cmd, args = []) {
   }
 }
 
+function cleanupContainers() {
+  const result = spawnSync(
+    "docker",
+    ["container", "ls", "-f", `label=${idLabel}`, "-q"],
+    { cwd: projectDir, encoding: "utf8" }
+  );
+  const containerIds = result.stdout?.trim().split(/\s+/).filter(Boolean) ?? [];
+
+  if (containerIds.length > 0) {
+    spawnSync("docker", ["rm", "-f", ...containerIds], {
+      cwd: projectDir,
+      stdio: "inherit",
+    });
+  }
+}
+
 const devcontainer = join(projectDir, "node_modules/.bin/devcontainer");
 
 // Clean up any previous test container
 console.log(`(*) Cleaning up previous containers...`);
-spawnSync("docker", ["rm", "-f", `$(docker container ls -f "label=${idLabel}" -q)`], {
-  cwd: projectDir,
-  stdio: "inherit",
-  shell: true,
-});
+cleanupContainers();
 
 // Start the container
 console.log(`(*) Starting container...`);
@@ -45,11 +57,7 @@ const execResult = spawnSync(
 
 // Clean up
 console.log(`(*) Cleaning up container...`);
-spawnSync("docker", ["rm", "-f", `$(docker container ls -f "label=${idLabel}" -q)`], {
-  cwd: projectDir,
-  stdio: "inherit",
-  shell: true,
-});
+cleanupContainers();
 
 console.log(`(*) Done.`);
 
