@@ -1,5 +1,6 @@
 {
     "id": "claude-code",
+    "version": "1.0.0",
     "name": "Claude Code",
     "installsAfter": [
         "./local-features/pnpm"

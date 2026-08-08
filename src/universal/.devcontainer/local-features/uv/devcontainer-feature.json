@@ -1,5 +1,6 @@
 {
     "id": "uv",
+    "version": "1.0.0",
     "name": "uv",
     "containerEnv": {
         "UV_INSTALL_DIR": "/usr/local/share/uv",

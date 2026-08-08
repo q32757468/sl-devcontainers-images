@@ -1,5 +1,6 @@
 {
     "id": "pnpm",
+    "version": "1.0.0",
     "name": "pnpm",
     "containerEnv": {
         "PNPM_HOME": "/usr/local/share/pnpm",
