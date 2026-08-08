@@ -61,7 +61,8 @@ check "rustup" rustup --version
 check "rustfmt" rustfmt --version
 check "clippy" cargo clippy --version
 check "rust-src" bash -c "rustup component list --installed | grep rust-src"
-check "rust-analysis" bash -c "rustup component list --installed | grep rust-analysis"
+check "rust-analyzer" rust-analyzer --version
+check "excluded-rust-components" bash -c "! rustup component list --installed | grep -E '^(rust-docs|llvm-tools|rust-analysis)-'"
 
 # Verify Rust is stable channel
 check "rust-stable" bash -c "rustup show active-toolchain | grep stable"
