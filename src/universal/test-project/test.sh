@@ -23,6 +23,13 @@ check "npm" npm --version
 check "nvm" bash -c ". /usr/local/share/nvm/nvm.sh && nvm --version"
 check "pnpm" pnpm --version
 check "codex" codex --version
+check "agent-browser" agent-browser --version
+check "agent-browser-offline-page" bash -c '
+    set -e
+    trap "agent-browser close >/dev/null 2>&1 || true" EXIT
+    agent-browser open "data:text/html,<title>Agent Browser Test</title><h1>Offline</h1>"
+    agent-browser get title | grep -Fx "Agent Browser Test"
+'
 
 # Verify two Node versions installed
 count=$(ls /usr/local/share/nvm/versions/node | wc -l)

@@ -37,6 +37,7 @@
             "profile": "complete"
         },
         "./local-features/pnpm": "latest",
+        "./local-features/agent-skills": "latest",
         "./local-features/patch-node": "latest",
         "./local-features/patch-python": "latest",
         "./local-features/claude-code": {
@@ -53,6 +54,7 @@
         "ghcr.io/devcontainers/features/rust",
         "./local-features/pnpm",
         "./local-features/uv",
+        "./local-features/agent-skills",
         "./local-features/claude-code",
         "./local-features/codex",
         "./local-features/patch-node",
