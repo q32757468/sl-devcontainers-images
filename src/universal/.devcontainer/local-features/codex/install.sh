@@ -3,6 +3,14 @@ set -e
 
 echo "(*) Installing Codex..."
 
+FEATURE_DIR="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+RUNTIME_DIR="/usr/local/share/devcontainer-features/codex"
+
+install -d -m 0755 "${RUNTIME_DIR}"
+install -m 0755 \
+    "${FEATURE_DIR}/post-start.sh" \
+    "${RUNTIME_DIR}/post-start.sh"
+
 USERNAME="${USERNAME:-"${_REMOTE_USER:-"codespace"}"}"
 USER_HOME=$(getent passwd "${USERNAME}" | cut -d: -f6)
 
