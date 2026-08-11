@@ -71,6 +71,17 @@ check "clippy" cargo clippy --version
 check "rust-src" bash -c "rustup component list --installed | grep rust-src"
 check "rust-analyzer" rust-analyzer --version
 check "excluded-rust-components" bash -c "! rustup component list --installed | grep -E '^(rust-docs|llvm-tools|rust-analysis)-'"
+check "cargo-config" bash -c '
+    set -e
+    config="${CARGO_HOME:?CARGO_HOME must be set}/config.toml"
+    test -f "$config"
+    grep -Fxq "[source.crates-io]" "$config"
+    grep -Fxq "replace-with = '\''rsproxy-sparse'\''" "$config"
+    grep -Fxq "registry = \"https://rsproxy.cn/crates.io-index\"" "$config"
+    grep -Fxq "registry = \"sparse+https://rsproxy.cn/index/\"" "$config"
+    grep -Fxq "index = \"https://rsproxy.cn/crates.io-index\"" "$config"
+    grep -Fxq "git-fetch-with-cli = true" "$config"
+'
 
 # Verify Rust is stable channel
 check "rust-stable" bash -c "rustup show active-toolchain | grep stable"

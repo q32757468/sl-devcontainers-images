@@ -1,0 +1,9 @@
+{
+    "id": "patch-rust",
+    "version": "1.0.0",
+    "name": "Patch Rust",
+    "description": "Configure Cargo for Chinese mainland users",
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/rust"
+    ]
+}

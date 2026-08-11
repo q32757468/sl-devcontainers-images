@@ -37,6 +37,7 @@
         "./local-features/agent-skills": "latest",
         "./local-features/patch-node": "latest",
         "./local-features/patch-python": "latest",
+        "./local-features/patch-rust": "latest",
         "./local-features/claude-code": {
             "cacheBuster": "1.5"
         },
@@ -56,7 +57,8 @@
         "./local-features/claude-code",
         "./local-features/codex",
         "./local-features/patch-node",
-        "./local-features/patch-python"
+        "./local-features/patch-python",
+        "./local-features/patch-rust"
     ],
     "remoteUser": "hsl",
     "containerUser": "hsl",
