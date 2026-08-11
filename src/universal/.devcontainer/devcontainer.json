@@ -30,6 +30,7 @@
             "profile": "minimal",
             "components": "rust-analyzer,rust-src,rustfmt,clippy"
         },
+        "./local-features/utils": "latest",
         "./local-features/pnpm": {
             "cacheBuster": "1"
         },
@@ -48,6 +49,7 @@
         "ghcr.io/devcontainers/features/node",
         "ghcr.io/devcontainers/features/python",
         "ghcr.io/devcontainers/features/rust",
+        "./local-features/utils",
         "./local-features/pnpm",
         "./local-features/uv",
         "./local-features/agent-skills",
