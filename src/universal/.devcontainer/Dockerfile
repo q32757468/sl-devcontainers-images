@@ -9,9 +9,9 @@ RUN if id "ubuntu" &>/dev/null; then \
         userdel -f -r ubuntu; \
     fi
 
-# Use Tsinghua mirror (local proxy interferes with default ubuntu sources)
-RUN sed -i 's|http://archive.ubuntu.com/ubuntu/|http://mirrors.tuna.tsinghua.edu.cn/ubuntu/|g' /etc/apt/sources.list.d/ubuntu.sources \
-    && sed -i 's|http://security.ubuntu.com/ubuntu/|http://mirrors.tuna.tsinghua.edu.cn/ubuntu/|g' /etc/apt/sources.list.d/ubuntu.sources
+# Use Alibaba Cloud mirror (local proxy interferes with default ubuntu sources)
+RUN sed -i 's|http://archive.ubuntu.com/ubuntu/|http://mirrors.aliyun.com/ubuntu/|g' /etc/apt/sources.list.d/ubuntu.sources \
+    && sed -i 's|http://security.ubuntu.com/ubuntu/|http://mirrors.aliyun.com/ubuntu/|g' /etc/apt/sources.list.d/ubuntu.sources
 
 RUN apt-get update \
     && apt-get -y install --no-install-recommends \

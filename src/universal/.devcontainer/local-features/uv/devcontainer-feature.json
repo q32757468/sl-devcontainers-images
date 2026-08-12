@@ -5,6 +5,6 @@
     "containerEnv": {
         "UV_INSTALL_DIR": "/usr/local/share/uv",
         "PATH": "/usr/local/share/uv:${PATH}",
-        "UV_DEFAULT_INDEX": "https://pypi.tuna.tsinghua.edu.cn/simple"
+        "UV_DEFAULT_INDEX": "https://mirrors.aliyun.com/pypi/simple/"
     }
 }
