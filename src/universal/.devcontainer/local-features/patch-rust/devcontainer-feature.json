@@ -5,5 +5,12 @@
     "description": "Configure Cargo for Chinese mainland users",
     "installsAfter": [
         "ghcr.io/devcontainers/features/rust"
+    ],
+    "mounts": [
+        {
+            "source": "cargo-registry",
+            "target": "/usr/local/cargo/registry",
+            "type": "volume"
+        }
     ]
 }
