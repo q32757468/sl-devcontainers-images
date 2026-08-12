@@ -1,4 +1,0 @@
-interface:
-  display_name: "Configure Dev Container"
-  short_description: "Apply repository rules to Dev Container configurations"
-  default_prompt: "Use $configure-devcontainer to create or update this project's Dev Container configuration."

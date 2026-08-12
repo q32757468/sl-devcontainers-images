@@ -30,15 +30,6 @@ check "agent-browser-offline-page" bash -c '
     agent-browser open "data:text/html,<title>Agent Browser Test</title><h1>Offline</h1>"
     agent-browser get title | grep -Fx "Agent Browser Test"
 '
-check "configure-devcontainer-skill" bash -c '
-    set -e
-    skill_path="$HOME/.agents/skills/configure-devcontainer/SKILL.md"
-    test -f "$skill_path"
-    grep -Fq "  codex-config:" "$skill_path"
-    grep -Fq "  claude-code-config:" "$skill_path"
-    test "$(grep -Fc "    external: true" "$skill_path")" -ge 2
-'
-
 # Verify two Node versions installed
 count=$(ls /usr/local/share/nvm/versions/node | wc -l)
 checkVersionCount "two versions of node are present" $count 2
