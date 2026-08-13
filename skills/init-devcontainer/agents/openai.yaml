@@ -1,0 +1,4 @@
+interface:
+  display_name: "Initialize Compose Dev Container"
+  short_description: "Initialize Compose Dev Container with external volumes"
+  default_prompt: "Use $init-devcontainer to initialize a Compose-backed Dev Container in this project."
