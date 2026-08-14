@@ -5,7 +5,7 @@ source /usr/local/share/devcontainer-features/utils/utils.sh
 
 echo "(*) Installing Codex..."
 
-install_post_start_script codex
+install_lifecycle_script codex
 REMOTE_USER_HOME="$(get_remote_user_home)"
 
 # Feature install scripts run as root.  Install the global package as the

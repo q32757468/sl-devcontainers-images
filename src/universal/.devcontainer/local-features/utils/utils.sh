@@ -25,19 +25,25 @@ run_as_remote_user() {
         "$@"
 }
 
-# Install a Feature's post-start.sh at the stable path used by its metadata.
-# By default, post-start.sh is resolved next to the calling install.sh.
-install_post_start_script() {
-    local feature_id="${1:?Usage: install_post_start_script <feature-id> [script]}"
-    local source_script="${2:-}"
+# Install a Feature's lifecycle script (post-start.sh, post-create.sh, ...)
+# at the stable path used by its metadata.
+# By default, <lifecycle-name>.sh is resolved next to the calling install.sh.
+install_lifecycle_script() {
+    local feature_id="${1:?Usage: install_lifecycle_script <feature-id> [lifecycle-name] [script]}"
+    local lifecycle_name="${2:-post-start}"
+    local source_script="${3:-}"
+
+    if [[ -z "${lifecycle_name}" ]]; then
+        lifecycle_name="post-start"
+    fi
 
     if [[ -z "${source_script}" ]]; then
         local caller_dir
         caller_dir="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[1]}")" && pwd)"
-        source_script="${caller_dir}/post-start.sh"
+        source_script="${caller_dir}/${lifecycle_name}.sh"
     fi
 
     local runtime_dir="/usr/local/share/devcontainer-features/${feature_id}"
     install -d -m 0755 "${runtime_dir}"
-    install -m 0755 "${source_script}" "${runtime_dir}/post-start.sh"
+    install -m 0755 "${source_script}" "${runtime_dir}/${lifecycle_name}.sh"
 }

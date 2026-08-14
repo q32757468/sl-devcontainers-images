@@ -21,6 +21,9 @@
             "type": "volume"
         }
     ],
+    "postCreateCommand": [
+        "/usr/local/share/devcontainer-features/claude-code/post-create.sh"
+    ],
     "postStartCommand": [
         "/usr/local/share/devcontainer-features/claude-code/post-start.sh"
     ]

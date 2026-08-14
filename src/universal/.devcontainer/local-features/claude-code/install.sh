@@ -5,7 +5,8 @@ source /usr/local/share/devcontainer-features/utils/utils.sh
 
 echo "(*) Installing Claude Code..."
 
-install_post_start_script claude-code
+install_lifecycle_script claude-code
+install_lifecycle_script claude-code post-create
 REMOTE_USER_HOME="$(get_remote_user_home)"
 
 # Feature install scripts run as root. Install the global package as the
