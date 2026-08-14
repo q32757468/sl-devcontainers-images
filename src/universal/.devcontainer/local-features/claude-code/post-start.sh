@@ -25,3 +25,19 @@ else
     '{permissions: {defaultMode: "bypassPermissions"}, skipDangerousModePermissionPrompt: true}' \
     > "${SETTINGS_FILE}"
 fi
+
+# Seed ~/.claude.json so Claude Code registers the workspace as a known project.
+# postStartCommand runs with cwd set to the workspace folder, so pwd is the workspace dir.
+CLAUDE_JSON_FILE="${HOME}/.claude.json"
+WORKSPACE_DIR="$(pwd)"
+
+if [[ -f "${CLAUDE_JSON_FILE}" ]]; then
+  # Merge in memory: keep existing state, only ensure the workspace entry exists.
+  UPDATED_JSON="$(jq --arg ws "${WORKSPACE_DIR}" \
+    '(.projects[$ws] //= {})' \
+    "${CLAUDE_JSON_FILE}")"
+  printf '%s\n' "${UPDATED_JSON}" > "${CLAUDE_JSON_FILE}"
+else
+  jq -n --arg ws "${WORKSPACE_DIR}" \
+    '{projects: {($ws): {}}}' > "${CLAUDE_JSON_FILE}"
+fi
