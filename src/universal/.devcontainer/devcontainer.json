@@ -61,8 +61,6 @@
             "extensions": [
                 "-dbaeumer.vscode-eslint",
                 "-ms-python.autopep8",
-                "-ms-python.debugpy",
-                "-ms-python.vscode-python-envs",
                 "charliermarsh.ruff",
                 "eamodio.gitlens",
                 "esbenp.prettier-vscode",
