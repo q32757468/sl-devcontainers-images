@@ -7,6 +7,6 @@ echo "(*) Patching npm registry mirrors..."
 
 # npm mirror
 run_as_remote_user \
-    npm config set registry https://registry.npmmirror.com/
+    sh -c 'printf "%s\n" "registry=https://registry.npmmirror.com/" > "${HOME}/.npmrc"'
 
 echo "Done!"

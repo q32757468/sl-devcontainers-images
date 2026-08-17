@@ -2,8 +2,8 @@
     "id": "patch-node",
     "version": "1.0.0",
     "name": "Patch Node.js",
-    "description": "Configure Node.js ecosystem for Chinese mainland users",
-    "installsAfter": [
-        "ghcr.io/devcontainers/features/node"
-    ]
+    "description": "Configure Node.js ecosystem",
+    "containerEnv": {
+        "NVM_NODEJS_ORG_MIRROR": "https://npmmirror.com/mirrors/node/"
+    }
 }

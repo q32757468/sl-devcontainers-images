@@ -2,8 +2,5 @@
     "id": "patch-python",
     "version": "1.0.0",
     "name": "Patch Python",
-    "description": "Configure Python ecosystem for Chinese mainland users",
-    "installsAfter": [
-        "ghcr.io/devcontainers/features/python"
-    ]
+    "description": "Configure Python ecosystem"
 }

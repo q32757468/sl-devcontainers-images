@@ -42,17 +42,17 @@
     },
     "overrideFeatureInstallOrder": [
         "ghcr.io/devcontainers/features/common-utils",
+        "./local-features/utils",
+        "./local-features/patch-node",
         "ghcr.io/devcontainers/features/node",
+        "./local-features/patch-python",
         "ghcr.io/devcontainers/features/python",
         "./local-features/rust",
-        "./local-features/utils",
         "./local-features/pnpm",
         "./local-features/uv",
         "./local-features/agent-skills",
         "./local-features/claude-code",
-        "./local-features/codex",
-        "./local-features/patch-node",
-        "./local-features/patch-python"
+        "./local-features/codex"
     ],
     "remoteUser": "hsl",
     "containerUser": "hsl",
@@ -60,6 +60,10 @@
         "vscode": {
             "extensions": [
                 "-dbaeumer.vscode-eslint",
+                "-ms-python.autopep8",
+                "-ms-python.debugpy",
+                "-ms-python.vscode-python-envs",
+                "charliermarsh.ruff",
                 "eamodio.gitlens",
                 "esbenp.prettier-vscode",
                 "chrisvltn.log-wrapper-for-vscode"
