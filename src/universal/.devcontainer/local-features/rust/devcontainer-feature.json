@@ -1,0 +1,18 @@
+{
+    "id": "rust",
+    "version": "1.0.0",
+    "name": "Rust",
+    "description": "Install and configure Rust with rustup",
+    "mounts": [
+        {
+            "source": "cargo-registry",
+            "target": "/home/hsl/.cargo/registry",
+            "type": "volume"
+        }
+    ],
+    "containerEnv": {
+        "RUSTUP_DIST_SERVER": "https://rsproxy.cn",
+        "RUSTUP_UPDATE_ROOT": "https://rsproxy.cn/rustup",
+        "PATH": "/usr/local/share/rust/bin:${PATH}"
+    }
+}

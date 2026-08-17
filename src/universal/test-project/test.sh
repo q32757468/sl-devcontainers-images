@@ -62,9 +62,14 @@ check "clippy" cargo clippy --version
 check "rust-src" bash -c "rustup component list --installed | grep rust-src"
 check "rust-analyzer" rust-analyzer --version
 check "excluded-rust-components" bash -c "! rustup component list --installed | grep -E '^(rust-docs|llvm-tools|rust-analysis)-'"
+check "cargo-home" bash -c '
+    set -e
+    test -z "${CARGO_HOME:-}"
+    test -d "${HOME}/.cargo"
+'
 check "cargo-config" bash -c '
     set -e
-    config="${CARGO_HOME:?CARGO_HOME must be set}/config.toml"
+    config="${HOME}/.cargo/config.toml"
     test -f "$config"
     grep -Fxq "[source.crates-io]" "$config"
     grep -Fxq "replace-with = '\''rsproxy-sparse'\''" "$config"

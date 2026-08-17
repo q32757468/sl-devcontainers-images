@@ -25,11 +25,7 @@
             "installTools": false
         },
         "./local-features/uv": "latest",
-        "ghcr.io/devcontainers/features/rust:1": {
-            "version": "stable",
-            "profile": "minimal",
-            "components": "rust-analyzer,rust-src,rustfmt,clippy"
-        },
+        "./local-features/rust": "latest",
         "./local-features/utils": "latest",
         "./local-features/pnpm": {
             "cacheBuster": "1"
@@ -37,7 +33,6 @@
         "./local-features/agent-skills": "latest",
         "./local-features/patch-node": "latest",
         "./local-features/patch-python": "latest",
-        "./local-features/patch-rust": "latest",
         "./local-features/claude-code": {
             "cacheBuster": "1.5"
         },
@@ -49,7 +44,7 @@
         "ghcr.io/devcontainers/features/common-utils",
         "ghcr.io/devcontainers/features/node",
         "ghcr.io/devcontainers/features/python",
-        "ghcr.io/devcontainers/features/rust",
+        "./local-features/rust",
         "./local-features/utils",
         "./local-features/pnpm",
         "./local-features/uv",
@@ -57,8 +52,7 @@
         "./local-features/claude-code",
         "./local-features/codex",
         "./local-features/patch-node",
-        "./local-features/patch-python",
-        "./local-features/patch-rust"
+        "./local-features/patch-python"
     ],
     "remoteUser": "hsl",
     "containerUser": "hsl",
