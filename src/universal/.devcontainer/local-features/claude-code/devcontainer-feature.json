@@ -17,7 +17,7 @@
         "source=${localEnv:HOME}/.claude,target=/tmp/claude-host,type=bind,readonly",
         {
             "source": "claude-code-config",
-            "target": "/home/hsl/.claude",
+            "target": "/home/${localEnv:LOGNAME}/.claude",
             "type": "volume"
         }
     ],

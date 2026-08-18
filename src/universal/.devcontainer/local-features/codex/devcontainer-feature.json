@@ -17,7 +17,7 @@
         "source=${localEnv:HOME}/.codex,target=/tmp/codex-host,type=bind,readonly",
         {
             "source": "codex-config",
-            "target": "/home/hsl/.codex",
+            "target": "/home/${localEnv:LOGNAME}/.codex",
             "type": "volume"
         }
     ],

@@ -6,7 +6,7 @@
     "mounts": [
         {
             "source": "cargo-registry",
-            "target": "/home/hsl/.cargo/registry",
+            "target": "/home/${localEnv:LOGNAME}/.cargo/registry",
             "type": "volume"
         }
     ],

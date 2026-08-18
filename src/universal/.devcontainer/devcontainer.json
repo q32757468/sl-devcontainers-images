@@ -5,7 +5,7 @@
     },
     "features": {
         "ghcr.io/devcontainers/features/common-utils:2": {
-            "username": "hsl",
+            "username": "${localEnv:LOGNAME}",
             "userUid": "1000",
             "userGid": "1000",
             "installZsh": false,
@@ -54,8 +54,8 @@
         "./local-features/claude-code",
         "./local-features/codex"
     ],
-    "remoteUser": "hsl",
-    "containerUser": "hsl",
+    "remoteUser": "${localEnv:LOGNAME}",
+    "containerUser": "${localEnv:LOGNAME}",
     "customizations": {
         "vscode": {
             "extensions": [

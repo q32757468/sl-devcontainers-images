@@ -4,7 +4,7 @@ ENV LANG=C.UTF-8 \
     DEBIAN_FRONTEND=noninteractive \
     TZ=Asia/Shanghai
 
-# Free the host-matching UID/GID before common-utils creates hsl:1000:1000.
+# Free the host-matching UID/GID before common-utils creates the configured user.
 RUN if id "ubuntu" &>/dev/null; then \
         userdel -f -r ubuntu; \
     fi
