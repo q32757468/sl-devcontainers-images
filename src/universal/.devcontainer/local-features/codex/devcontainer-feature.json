@@ -13,8 +13,11 @@
         }
     },
     "mounts": [
-        // readonly 只有字符串形式支持，虽然schema上显示不支持，但是实际是支持字符串形式
-        "source=${localEnv:HOME}/.codex,target=/tmp/codex-host,type=bind,readonly",
+        {
+            "source": "${localEnv:HOME}/.codex",
+            "target": "/tmp/codex-host",
+            "type": "bind"
+        },
         {
             "source": "codex-config",
             "target": "/home/${localEnv:LOGNAME}/.codex",
