@@ -17,20 +17,16 @@ Use `<image>` = `sl-universal-image:latest` by default, or the image the user su
      python3 <skill-directory>/scripts/extract_volumes.py <image>
      ```
 
-   - Windows: require `wsl.exe --status` to succeed and `wsl.exe -l -q` to
-     return a distribution; otherwise report that the environment is
-     unsupported. With WSL, run in PowerShell. Read the extractor on the
-     Windows side and send it to the WSL Python interpreter through stdin so
-     the WSL command does not need to resolve a Windows script path:
+   - Windows: run the bundled PowerShell wrapper:
 
      ```powershell
      $skillPath = (Resolve-Path "<skill-directory>").Path
      $scriptPath = Join-Path $skillPath "scripts/extract_volumes.py"
-     Get-Content -LiteralPath $scriptPath -Raw -Encoding UTF8 |
-       wsl.exe -- python3 - "<image>"
+     $wrapperPath = Join-Path $skillPath "scripts/run-extract-volumes.ps1"
+     powershell.exe -NoProfile -ExecutionPolicy Bypass -File $wrapperPath -ScriptPath $scriptPath -Image "<image>"
      ```
 
-   Use its output as the Compose `volumes` block. It keeps named volume mounts and marks them as `external: true`. If it fails, do not create partial files. Use `--docker-path podman` for Podman-compatible backends.
+   Use the output as the Compose `volumes` block. If extraction fails, create nothing. For Podman-compatible backends, pass `--docker-path podman`.
 
 2. Derive the project name unless the user supplied one, then create `devcontainer.json` with exactly:
 
