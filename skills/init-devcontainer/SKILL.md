@@ -30,7 +30,7 @@ Use `<image>` = `sl-universal-image:latest` by default, or the image the user su
        wsl.exe -- python3 - "<image>"
      ```
 
-   Use its output as the Compose `volumes` block. It invokes `npx --yes --package @devcontainers/cli devcontainer read-configuration` with a temporary image-only configuration, keeps only named `type=volume` mounts, and marks each as `external: true`. `npx` reuses the project's local package when available and downloads it otherwise; the latter requires npm network access. If it fails, do not create partial files. Use `--docker-path podman` when the backend is Podman-compatible.
+   Use its output as the Compose `volumes` block. It keeps named volume mounts and marks them as `external: true`. If it fails, do not create partial files. Use `--docker-path podman` for Podman-compatible backends.
 
 2. Derive the project name unless the user supplied one, then create `devcontainer.json` with exactly:
 
