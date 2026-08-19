@@ -11,9 +11,21 @@ Use `<image>` = `sl-universal-image:latest` by default, or the image the user su
 
 1. Run the bundled extractor:
 
-   ```bash
-   python3 <skill-directory>/scripts/extract_volumes.py <image>
-   ```
+   - Non-Windows:
+
+     ```bash
+     python3 <skill-directory>/scripts/extract_volumes.py <image>
+     ```
+
+   - Windows: require `wsl.exe --status` to succeed and `wsl.exe -l -q` to
+     return a distribution; otherwise report that the environment is
+     unsupported. With WSL, run in PowerShell:
+
+     ```powershell
+     $skillPath = (Resolve-Path "<skill-directory>").Path
+     $wslSkillPath = (wsl.exe wslpath -u $skillPath).Trim()
+     wsl.exe -- python3 "$wslSkillPath/scripts/extract_volumes.py" "<image>"
+     ```
 
    Use its output as the Compose `volumes` block. It invokes `npx --yes --package @devcontainers/cli devcontainer read-configuration` with a temporary image-only configuration, keeps only named `type=volume` mounts, and marks each as `external: true`. `npx` reuses the project's local package when available and downloads it otherwise; the latter requires npm network access. If it fails, do not create partial files. Use `--docker-path podman` when the backend is Podman-compatible.
 
