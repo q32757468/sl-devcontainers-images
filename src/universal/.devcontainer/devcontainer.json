@@ -4,7 +4,7 @@
         "context": "."
     },
     "features": {
-        "ghcr.io/devcontainers/features/common-utils:2": {
+        "ghcr.nju.edu.cn/devcontainers/features/common-utils:2": {
             "username": "${localEnv:LOGNAME}",
             "userUid": "1000",
             "userGid": "1000",
@@ -13,13 +13,13 @@
             "installOhMyZshConfig": false,
             "upgradePackages": false
         },
-        "ghcr.io/devcontainers/features/node:2": {
+        "ghcr.nju.edu.cn/devcontainers/features/node:2": {
             "version": "24",
             "additionalVersions": "22",
             "npmVersion": "latest",
             "pnpmVersion": "none"
         },
-        "ghcr.io/devcontainers/features/python:1": {
+        "ghcr.nju.edu.cn/devcontainers/features/python:1": {
             "version": "os-provided",
             "useOryxIfAvailable": "false",
             "installTools": false
@@ -41,12 +41,12 @@
         }
     },
     "overrideFeatureInstallOrder": [
-        "ghcr.io/devcontainers/features/common-utils",
+        "ghcr.nju.edu.cn/devcontainers/features/common-utils",
         "./local-features/utils",
         "./local-features/patch-node",
-        "ghcr.io/devcontainers/features/node",
+        "ghcr.nju.edu.cn/devcontainers/features/node",
         "./local-features/patch-python",
-        "ghcr.io/devcontainers/features/python",
+        "ghcr.nju.edu.cn/devcontainers/features/python",
         "./local-features/rust",
         "./local-features/pnpm",
         "./local-features/uv",
