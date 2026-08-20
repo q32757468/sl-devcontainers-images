@@ -1,0 +1,6 @@
+{
+    "id": "test-base",
+    "version": "1.0.0",
+    "name": "Internal Feature Test Base",
+    "description": "Prepare the minimal base environment used by local Feature tests"
+}

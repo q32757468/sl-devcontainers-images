@@ -1,0 +1,14 @@
+{
+    "uv": {
+        "image": "ubuntu:noble",
+        "remoteUser": "ubuntu",
+        "features": {
+            "test-base": {},
+            "uv": {}
+        },
+        "overrideFeatureInstallOrder": [
+            "./test-base",
+            "./uv"
+        ]
+    }
+}

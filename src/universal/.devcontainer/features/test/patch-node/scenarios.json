@@ -1,0 +1,24 @@
+{
+    "patch-node": {
+        "image": "ubuntu:noble",
+        "remoteUser": "ubuntu",
+        "features": {
+            "test-base": {},
+            "utils": {},
+            "patch-node": {},
+            "ghcr.nju.edu.cn/devcontainers/features/node:2": {
+                "version": "24",
+                "additionalVersions": "22",
+                "npmVersion": "latest",
+                "pnpmVersion": "none",
+                "nodeGypDependencies": false
+            }
+        },
+        "overrideFeatureInstallOrder": [
+            "./test-base",
+            "./utils",
+            "./patch-node",
+            "ghcr.nju.edu.cn/devcontainers/features/node:2"
+        ]
+    }
+}

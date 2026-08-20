@@ -6,8 +6,7 @@ source /usr/local/share/devcontainer-features/utils/utils.sh
 echo "(*) Installing pnpm..."
 
 install -d -m 0755 "${PNPM_HOME}"
-npm install --prefix "${PNPM_HOME}" pnpm
-ln -sfn node_modules/.bin "${PNPM_HOME}/bin"
+npm install --global --prefix "${PNPM_HOME}" pnpm
 
 chown -R "${_REMOTE_USER}" "${PNPM_HOME}"
 

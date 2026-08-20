@@ -48,35 +48,59 @@ pnpm run test:universal
 
 测试脚本会自动清理同标签的旧容器，启动新容器，执行 [`src/universal/test-project/test.sh`](src/universal/test-project/test.sh)，最后清理测试容器。
 
+只测试一个本地 Feature：
+
+```bash
+pnpm test:feature rust
+```
+
+测试全部本地 Features：
+
+```bash
+pnpm test:features
+```
+
+单 Feature 测试会构建该 Feature 及其必要依赖的最小场景，不构建完整 `universal` 镜像。
+
 ## 项目结构
 
 ```text
 .
 ├── scripts/
 │   ├── build.mjs                 # 调用 Dev Container CLI 构建镜像
+│   ├── test-feature.mjs          # 选择并运行本地 Feature 测试
 │   └── test.mjs                  # 启动容器并执行测试
 ├── src/
 │   └── universal/
 │       ├── .devcontainer/
 │       │   ├── Dockerfile        # 基础镜像
 │       │   ├── devcontainer.json # Features、用户和 VS Code 配置
-│       │   └── local-features/   # 项目维护的本地 Features
-│       └── test-project/         # 容器内测试脚本
+│       │   └── features/
+│       │       ├── src/          # 项目维护的本地 Features
+│       │       └── test/         # 与 Feature 对应的测试场景
+│       └── test-project/         # 完整镜像的集成测试
 └── skills/
     └── init-devcontainer/        # 初始化 Compose Dev Container 的 Codex Skill
 ```
 
 ## 添加或修改本地 Feature
 
-本地 Feature 位于 `src/universal/.devcontainer/local-features/`。新增或修改 Feature 前，请先查看并复用公共函数：
+本地 Feature 位于 `src/universal/.devcontainer/features/src/`，对应测试位于 `src/universal/.devcontainer/features/test/`。新增或修改 Feature 前，请先查看并复用公共函数：
 
 ```bash
 source /usr/local/share/devcontainer-features/utils/utils.sh
 ```
 
-公共函数包括以远程用户身份执行命令、获取远程用户 Home 目录，以及安装生命周期脚本。修改后重新构建并运行测试：
+公共函数包括以远程用户身份执行命令、获取远程用户 Home 目录，以及安装生命周期脚本。修改后先运行对应 Feature 测试：
 
 ```bash
+pnpm test:feature <feature>
+```
+
+提交前运行全部 Feature 测试和完整镜像集成测试：
+
+```bash
+pnpm test:features
 pnpm run build:universal
 pnpm run test:universal
 ```

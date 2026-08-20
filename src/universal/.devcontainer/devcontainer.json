@@ -24,35 +24,35 @@
             "useOryxIfAvailable": "false",
             "installTools": false
         },
-        "./local-features/uv": "latest",
-        "./local-features/rust": "latest",
-        "./local-features/utils": "latest",
-        "./local-features/pnpm": {
+        "./features/src/uv": "latest",
+        "./features/src/rust": "latest",
+        "./features/src/utils": "latest",
+        "./features/src/pnpm": {
             "cacheBuster": "1"
         },
-        "./local-features/agent-skills": "latest",
-        "./local-features/patch-node": "latest",
-        "./local-features/patch-python": "latest",
-        "./local-features/claude-code": {
+        "./features/src/agent-skills": "latest",
+        "./features/src/patch-node": "latest",
+        "./features/src/patch-python": "latest",
+        "./features/src/claude-code": {
             "cacheBuster": "1.5"
         },
-        "./local-features/codex": {
+        "./features/src/codex": {
             "cacheBuster": "1.5"
         }
     },
     "overrideFeatureInstallOrder": [
         "ghcr.nju.edu.cn/devcontainers/features/common-utils",
-        "./local-features/utils",
-        "./local-features/patch-node",
+        "./features/src/utils",
+        "./features/src/patch-node",
         "ghcr.nju.edu.cn/devcontainers/features/node",
-        "./local-features/patch-python",
+        "./features/src/patch-python",
         "ghcr.nju.edu.cn/devcontainers/features/python",
-        "./local-features/uv",
-        "./local-features/rust",
-        "./local-features/pnpm",
-        "./local-features/agent-skills",
-        "./local-features/claude-code",
-        "./local-features/codex"
+        "./features/src/uv",
+        "./features/src/rust",
+        "./features/src/pnpm",
+        "./features/src/agent-skills",
+        "./features/src/claude-code",
+        "./features/src/codex"
     ],
     "remoteUser": "${localEnv:LOGNAME}",
     "containerUser": "${localEnv:LOGNAME}",

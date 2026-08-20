@@ -3,6 +3,6 @@
     "version": "1.0.0",
     "name": "Agent Skills",
     "installsAfter": [
-        "./local-features/pnpm"
+        "./pnpm"
     ]
 }

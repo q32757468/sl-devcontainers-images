@@ -1,0 +1,16 @@
+{
+    "rust": {
+        "image": "ubuntu:noble",
+        "remoteUser": "ubuntu",
+        "features": {
+            "test-base": {},
+            "utils": {},
+            "rust": {}
+        },
+        "overrideFeatureInstallOrder": [
+            "./test-base",
+            "./utils",
+            "./rust"
+        ]
+    }
+}

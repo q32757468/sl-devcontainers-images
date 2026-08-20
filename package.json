@@ -1,6 +1,8 @@
 {
 	"scripts": {
 		"build:universal": "node scripts/build.mjs universal",
+		"test:feature": "node scripts/test-feature.mjs",
+		"test:features": "node scripts/test-feature.mjs --all",
 		"test:universal": "node scripts/test.mjs universal"
 	},
 	"devDependencies": {

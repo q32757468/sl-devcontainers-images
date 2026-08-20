@@ -1,0 +1,26 @@
+{
+    "agent-skills": {
+        "image": "ubuntu:noble",
+        "remoteUser": "ubuntu",
+        "features": {
+            "test-base": {},
+            "utils": {},
+            "patch-node": {},
+            "ghcr.nju.edu.cn/devcontainers/features/node:2": {
+                "version": "24",
+                "pnpmVersion": "none",
+                "nodeGypDependencies": false
+            },
+            "pnpm": {},
+            "agent-skills": {}
+        },
+        "overrideFeatureInstallOrder": [
+            "./test-base",
+            "./utils",
+            "./patch-node",
+            "ghcr.nju.edu.cn/devcontainers/features/node:2",
+            "./pnpm",
+            "./agent-skills"
+        ]
+    }
+}

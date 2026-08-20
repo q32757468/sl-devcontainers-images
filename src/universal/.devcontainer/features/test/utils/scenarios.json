@@ -1,0 +1,9 @@
+{
+    "utils": {
+        "image": "ubuntu:noble",
+        "remoteUser": "ubuntu",
+        "features": {
+            "utils": {}
+        }
+    }
+}

@@ -1,5 +1,5 @@
 #!/bin/bash
-cd $(dirname "$0")
+cd "$(dirname "$0")"
 
 source test-utils.sh
 
@@ -7,8 +7,8 @@ source test-utils.sh
 # Basic system checks
 # ------------------------------------------------------------------
 check "non-root-user" id hsl
-check "locale" [ $(locale -a | grep C.utf8) ]
-check "timezone" [ "$(readlink -f /etc/localtime)" = "/usr/share/zoneinfo/Asia/Shanghai" ]
+check "locale" bash -c "locale -a | grep -q C.utf8"
+check "timezone" test "$(readlink -f /etc/localtime)" = "/usr/share/zoneinfo/Asia/Shanghai"
 check "sudo" sudo echo "sudo works."
 check "bash" bash --version
 
@@ -16,71 +16,50 @@ check "bash" bash --version
 checkOSPackages "system-packages" vim curl ca-certificates git sudo
 
 # ------------------------------------------------------------------
-# Node.js
+# Feature smoke checks
 # ------------------------------------------------------------------
 check "node" node --version
 check "npm" npm --version
 check "nvm" bash -c ". /usr/local/share/nvm/nvm.sh && nvm --version"
 check "pnpm" pnpm --version
 check "codex" codex --version
+check "claude" claude --version
 check "agent-browser" agent-browser --version
-check "agent-browser-offline-page" bash -c '
-    set -e
-    trap "agent-browser close >/dev/null 2>&1 || true" EXIT
-    agent-browser open "data:text/html,<title>Agent Browser Test</title><h1>Offline</h1>"
-    agent-browser get title | grep -Fx "Agent Browser Test"
-'
-# Verify two Node versions installed
-count=$(ls /usr/local/share/nvm/versions/node | wc -l)
-checkVersionCount "two versions of node are present" $count 2
-echo $(echo "node versions:" && ls -a /usr/local/share/nvm/versions/node)
-
-# Default Node version check
-check "default-node-version" bash -c "node --version | grep 24."
-
-# ------------------------------------------------------------------
-# Python
-# ------------------------------------------------------------------
 check "python3" python3 --version
 check "pip3" pip3 --version
 check "uv" uv --version
-
-# Verify system Python is 3.12
-check "python-3.12" bash -c "python3 --version | grep '3\.12'"
-
-# Test uv can create a venv and install a package
-check "uv-venv" bash -c "cd /tmp && uv venv --python python3 /tmp/test-uv-venv && rm -rf /tmp/test-uv-venv"
-
-# ------------------------------------------------------------------
-# Rust
-# ------------------------------------------------------------------
 check "rustc" rustc --version
 check "cargo" cargo --version
 check "rustup" rustup --version
-check "rustfmt" rustfmt --version
-check "clippy" cargo clippy --version
-check "rust-src" bash -c "rustup component list --installed | grep rust-src"
-check "rust-analyzer" rust-analyzer --version
-check "excluded-rust-components" bash -c "! rustup component list --installed | grep -E '^(rust-docs|llvm-tools|rust-analysis)-'"
-check "cargo-home" bash -c '
+
+# ------------------------------------------------------------------
+# Cross-feature and final image integration checks
+# ------------------------------------------------------------------
+count=$(find /usr/local/share/nvm/versions/node -mindepth 1 -maxdepth 1 -type d | wc -l)
+checkVersionCount "two-node-versions" "$count" 2
+check "default-node-version" bash -c "node --version | grep -q '^v24\.'"
+check "python-version" bash -c "python3 --version | grep -q '3\.12'"
+check "remote-user-homes" bash -c '
     set -e
     test -z "${CARGO_HOME:-}"
     test -d "${HOME}/.cargo"
+    test -d "${HOME}/.codex"
+    test -d "${HOME}/.claude"
 '
-check "cargo-config" bash -c '
+check "codex-final-config" bash -c '
     set -e
-    config="${HOME}/.cargo/config.toml"
+    config="${HOME}/.codex/config.toml"
     test -f "$config"
-    grep -Fxq "[source.crates-io]" "$config"
-    grep -Fxq "replace-with = '\''rsproxy-sparse'\''" "$config"
-    grep -Fxq "registry = \"https://rsproxy.cn/crates.io-index\"" "$config"
-    grep -Fxq "registry = \"sparse+https://rsproxy.cn/index/\"" "$config"
-    grep -Fxq "index = \"https://rsproxy.cn/crates.io-index\"" "$config"
-    grep -Fxq "git-fetch-with-cli = true" "$config"
+    grep -Fxq "approval_policy = \"never\"" "$config"
+    grep -Fxq "sandbox_mode = \"danger-full-access\"" "$config"
 '
-
-# Verify Rust is stable channel
-check "rust-stable" bash -c "rustup show active-toolchain | grep stable"
+check "claude-lifecycle" bash -c '
+    set -e
+    test -f "${HOME}/.claude/settings.json"
+    test -L "${HOME}/.claude/skills"
+    test "$(readlink "${HOME}/.claude/skills")" = "${HOME}/.agents/skills"
+    test "$(jq -r ".permissions.defaultMode" "${HOME}/.claude/settings.json")" = "bypassPermissions"
+'
 
 # ------------------------------------------------------------------
 # Report

@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "name": "Codex",
     "installsAfter": [
-        "./local-features/pnpm"
+        "./pnpm"
     ],
     "options": {
         "cacheBuster": {

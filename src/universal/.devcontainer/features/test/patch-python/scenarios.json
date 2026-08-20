@@ -1,0 +1,16 @@
+{
+    "patch-python": {
+        "image": "ubuntu:noble",
+        "remoteUser": "ubuntu",
+        "features": {
+            "test-base": {},
+            "utils": {},
+            "patch-python": {}
+        },
+        "overrideFeatureInstallOrder": [
+            "./test-base",
+            "./utils",
+            "./patch-python"
+        ]
+    }
+}
