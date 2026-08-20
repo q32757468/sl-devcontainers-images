@@ -47,9 +47,9 @@
         "ghcr.nju.edu.cn/devcontainers/features/node",
         "./local-features/patch-python",
         "ghcr.nju.edu.cn/devcontainers/features/python",
+        "./local-features/uv",
         "./local-features/rust",
         "./local-features/pnpm",
-        "./local-features/uv",
         "./local-features/agent-skills",
         "./local-features/claude-code",
         "./local-features/codex"
