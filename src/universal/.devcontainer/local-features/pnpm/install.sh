@@ -5,14 +5,16 @@ source /usr/local/share/devcontainer-features/utils/utils.sh
 
 echo "(*) Installing pnpm..."
 
-curl -fsSL https://get.pnpm.io/install.sh | SHELL="$(which bash)" bash -
+install -d -m 0755 "${PNPM_HOME}"
+npm install --prefix "${PNPM_HOME}" pnpm
+ln -sfn node_modules/.bin "${PNPM_HOME}/bin"
 
 chown -R "${_REMOTE_USER}" "${PNPM_HOME}"
 
 # pnpm mirror
 run_as_remote_user \
     PNPM_HOME="${PNPM_HOME}" \
-    PATH="${PNPM_HOME}:${PATH}" \
+    PATH="${PNPM_HOME}/bin:${PATH}" \
     pnpm config set registry https://registry.npmmirror.com/
 
 echo "Done!"
