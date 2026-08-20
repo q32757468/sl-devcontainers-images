@@ -3,11 +3,17 @@
         "image": "ubuntu:noble",
         "remoteUser": "ubuntu",
         "features": {
-            "test-base": {},
+            "ghcr.nju.edu.cn/devcontainers/features/common-utils:2": {},
+            "ghcr.nju.edu.cn/devcontainers/features/python:1": {
+                "version": "os-provided",
+                "useOryxIfAvailable": "false",
+                "installTools": false
+            },
             "uv": {}
         },
         "overrideFeatureInstallOrder": [
-            "./test-base",
+            "ghcr.nju.edu.cn/devcontainers/features/common-utils:2",
+            "ghcr.nju.edu.cn/devcontainers/features/python:1",
             "./uv"
         ]
     }

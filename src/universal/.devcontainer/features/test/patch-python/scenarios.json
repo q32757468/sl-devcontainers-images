@@ -3,12 +3,12 @@
         "image": "ubuntu:noble",
         "remoteUser": "ubuntu",
         "features": {
-            "test-base": {},
+            "ghcr.nju.edu.cn/devcontainers/features/common-utils:2": {},
             "utils": {},
             "patch-python": {}
         },
         "overrideFeatureInstallOrder": [
-            "./test-base",
+            "ghcr.nju.edu.cn/devcontainers/features/common-utils:2",
             "./utils",
             "./patch-python"
         ]
