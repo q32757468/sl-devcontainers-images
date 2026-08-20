@@ -12,7 +12,9 @@
                 "nodeGypDependencies": false
             },
             "pnpm": {},
-            "agent-skills": {}
+            "agent-skills": {
+                "chromeDownloadBaseUrl": "https://cdn.npmmirror.com/binaries/chrome-for-testing"
+            }
         },
         "overrideFeatureInstallOrder": [
             "ghcr.nju.edu.cn/devcontainers/features/common-utils:2",

@@ -1,7 +1,14 @@
 {
     "id": "agent-skills",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "name": "Agent Skills",
+    "options": {
+        "chromeDownloadBaseUrl": {
+            "type": "string",
+            "default": "https://cdn.npmmirror.com/binaries/chrome-for-testing",
+            "description": "Base URL used by Puppeteer to download Chrome for Testing."
+        }
+    },
     "installsAfter": [
         "./pnpm"
     ]
