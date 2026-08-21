@@ -23,6 +23,7 @@ check "npm" npm --version
 check "nvm" bash -c ". /usr/local/share/nvm/nvm.sh && nvm --version"
 check "pnpm" pnpm --version
 check "codex" codex --version
+check "agy" agy --version
 check "claude" claude --version
 check "agent-browser" agent-browser --version
 check "python3" python3 --version

@@ -1,0 +1,29 @@
+{
+    "id": "antigravity",
+    "version": "1.0.0",
+    "name": "Antigravity CLI",
+    "description": "Install the Antigravity CLI and persist its Gemini configuration.",
+    "installsAfter": [
+        "./utils"
+    ],
+    "options": {
+        "cacheBuster": {
+            "type": "string",
+            "default": "",
+            "description": "Change this value to force a fresh Antigravity CLI installation during image builds."
+        }
+    },
+    "mounts": [
+        {
+            "source": "agy-config",
+            "target": "/home/${localEnv:LOGNAME}/.gemini",
+            "type": "volume"
+        }
+    ],
+    "containerEnv": {
+        "PATH": "/usr/local/share/antigravity/bin:${PATH}"
+    },
+    "postStartCommand": [
+        "/usr/local/share/devcontainer-features/antigravity/post-start.sh"
+    ]
+}
