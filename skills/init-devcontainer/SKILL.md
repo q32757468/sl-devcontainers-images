@@ -1,34 +1,13 @@
 ---
 name: init-devcontainer
-description: Create a Compose-backed Dev Container with metadata-derived external volumes; default image sl-universal-image, never overwrite existing configs.
+description: Create a Compose-backed Dev Container for sl-universal-image with fixed external config and cache volumes; never overwrite existing configs.
 ---
 
 # Initialize Devcontainer
 
 Create `.devcontainer/devcontainer.json` and `.devcontainer/docker-compose.yml` only when neither file exists. If either file exists, stop without changing it.
 
-Use `<image>` = `sl-universal-image:latest` by default, or the image the user supplies.
-
-1. Run the bundled extractor:
-
-   - Non-Windows:
-
-     ```bash
-     python3 <skill-directory>/scripts/extract_volumes.py <image>
-     ```
-
-   - Windows: run the bundled PowerShell wrapper:
-
-     ```powershell
-     $skillPath = (Resolve-Path "<skill-directory>").Path
-     $scriptPath = Join-Path $skillPath "scripts/extract_volumes.py"
-     $wrapperPath = Join-Path $skillPath "scripts/run-extract-volumes.ps1"
-     powershell.exe -NoProfile -ExecutionPolicy Bypass -File $wrapperPath -ScriptPath $scriptPath -Image "<image>"
-     ```
-
-   Use the output as the Compose `volumes` block. If extraction fails, create nothing. For Podman-compatible backends, pass `--docker-path podman`.
-
-2. Derive the project name unless the user supplied one, then create `devcontainer.json` with exactly:
+Use `<image>` = `sl-universal-image:latest` by default, or the image the user supplies. Derive the project name unless the user supplied one, then create `devcontainer.json` with exactly:
 
    ```json
    {
@@ -42,7 +21,7 @@ Use `<image>` = `sl-universal-image:latest` by default, or the image the user su
    }
    ```
 
-3. Create `docker-compose.yml` with the extractor output in place of `<volumes-block>`:
+Create `docker-compose.yml` with the two shared volumes declared as external:
 
    ```yaml
    services:
@@ -50,7 +29,11 @@ Use `<image>` = `sl-universal-image:latest` by default, or the image the user su
        image: <image>
        command: sleep infinity
 
-   <volumes-block>
+   volumes:
+     sl-config:
+       external: true
+     sl-cache:
+       external: true
    ```
 
-Validate the JSON and confirm the Compose service, image, command, and external volume block. Do not create the external Docker volumes, add an `image` field to `devcontainer.json`, or overwrite either existing file.
+Do not inspect image metadata to discover volumes. Validate the JSON and confirm the Compose service, image, command, and exactly the `sl-config` and `sl-cache` external volume declarations. Do not create the external Docker volumes, add an `image` field to `devcontainer.json`, or overwrite either existing file.

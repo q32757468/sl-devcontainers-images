@@ -13,7 +13,7 @@
   - Claude Code、OpenAI Codex、agent-browser 及对应技能
 - 配置 npm、pnpm、pip 和 Cargo 镜像，加快依赖下载
 - 提供 VS Code 常用扩展配置
-- 为 Cargo、Claude Code 和 Codex 配置持久化卷
+- 使用 `sl-config` 和 `sl-cache` 两个共享卷分别持久化用户配置与缓存
 
 ## 环境要求
 

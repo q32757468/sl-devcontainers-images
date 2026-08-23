@@ -60,6 +60,12 @@
     ],
     "remoteUser": "${localEnv:LOGNAME}",
     "containerUser": "${localEnv:LOGNAME}",
+    "mounts": [
+        "source=sl-config,target=/home/${localEnv:LOGNAME}/.codex,type=volume",
+        "source=sl-config,target=/home/${localEnv:LOGNAME}/.claude,type=volume",
+        "source=sl-config,target=/home/${localEnv:LOGNAME}/.gemini,type=volume",
+        "source=sl-cache,target=/home/${localEnv:LOGNAME}/.cargo/registry,type=volume"
+    ],
     "customizations": {
         "vscode": {
             "extensions": [

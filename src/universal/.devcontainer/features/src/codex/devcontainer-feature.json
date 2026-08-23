@@ -17,11 +17,6 @@
             "source": "${localEnv:HOME}/.codex",
             "target": "/tmp/codex-host",
             "type": "bind"
-        },
-        {
-            "source": "codex-config",
-            "target": "/home/${localEnv:LOGNAME}/.codex",
-            "type": "volume"
         }
     ],
     "postStartCommand": [
