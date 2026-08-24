@@ -68,6 +68,14 @@ check "claude-lifecycle" bash -c '
     test "$(readlink "${HOME}/.claude/skills")" = "${HOME}/.agents/skills"
     test "$(jq -r ".permissions.defaultMode" "${HOME}/.claude/settings.json")" = "bypassPermissions"
 '
+check "antigravity-yolo-config" bash -c '
+    set -e
+    settings="${HOME}/.gemini/antigravity-cli/settings.json"
+    test -f "${settings}"
+    test "$(jq -r ".agentMode" "${settings}")" = "accept-edits"
+    test "$(jq -r ".toolPermission" "${settings}")" = "always-proceed"
+    test "$(jq -r ".artifactReviewPolicy" "${settings}")" = "always-proceed"
+'
 
 # ------------------------------------------------------------------
 # Report
