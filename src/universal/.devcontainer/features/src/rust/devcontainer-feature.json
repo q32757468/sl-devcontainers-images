@@ -4,8 +4,11 @@
     "name": "Rust",
     "description": "Install and configure Rust with rustup",
     "containerEnv": {
-        "RUSTUP_DIST_SERVER": "https://rsproxy.cn",
-        "RUSTUP_UPDATE_ROOT": "https://rsproxy.cn/rustup",
+        // Keep rustup on its official defaults: static.rust-lang.org was much
+        // faster for Rust components on the current network. Uncomment these
+        // overrides if an environment needs the rsproxy mirror instead.
+        // "RUSTUP_DIST_SERVER": "https://rsproxy.cn",
+        // "RUSTUP_UPDATE_ROOT": "https://rsproxy.cn/rustup",
         "PATH": "/usr/local/share/rust/bin:${PATH}"
     }
 }

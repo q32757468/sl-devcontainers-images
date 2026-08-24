@@ -10,6 +10,7 @@ check "clippy" cargo clippy --version
 check "rust-src" bash -c "rustup component list --installed | grep -q '^rust-src'"
 check "excluded-components" bash -c "! rustup component list --installed | grep -Eq '^(rust-docs|llvm-tools|rust-analysis)-'"
 check "stable-toolchain" bash -c "rustup show active-toolchain | grep -q '^stable-'"
+check "official-rustup-source" bash -c 'test -z "${RUSTUP_DIST_SERVER:-}" && test -z "${RUSTUP_UPDATE_ROOT:-}"'
 check "cargo-home" bash -c 'test -z "${CARGO_HOME:-}" && test -d "${HOME}/.cargo"'
 check "cargo-registry-cache-link" bash -c '
     test -L "${HOME}/.cargo/registry"
