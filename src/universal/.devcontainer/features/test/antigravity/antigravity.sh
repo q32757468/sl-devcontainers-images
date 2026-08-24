@@ -6,6 +6,10 @@ check "runtime-user" bash -c 'test "$(id -un)" = "ubuntu"'
 check "agy" agy --version
 check "agy-install-dir" test -x /usr/local/share/antigravity/bin/agy
 check "agy-path" bash -c 'test "$(command -v agy)" = "/usr/local/share/antigravity/bin/agy"'
+check "gemini-config-link" bash -c '
+    test -L "${HOME}/.gemini"
+    test "$(readlink "${HOME}/.gemini")" = "${HOME}/.sl-config/.gemini"
+'
 check "gemini-config-dir" test -d "${HOME}/.gemini"
 check "gemini-config-owner" bash -c '
     expected="$(id -u):$(id -g)"

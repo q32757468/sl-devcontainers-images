@@ -8,6 +8,7 @@ echo "(*) Installing Rust..."
 REMOTE_USER_HOME="$(get_remote_user_home)"
 REMOTE_CARGO_HOME="${REMOTE_USER_HOME}/.cargo"
 RUST_BIN_DIR="/usr/local/share/rust/bin"
+link_persistent_directory cache "${REMOTE_CARGO_HOME}/registry"
 
 run_as_remote_user sh -c "curl --proto '=https' --tlsv1.2 -sSf https://rsproxy.cn/rustup-init.sh | sh -s -- -y --no-modify-path --default-toolchain stable --profile minimal --component rust-analyzer,rust-src,rustfmt,clippy"
 
@@ -15,8 +16,6 @@ run_as_remote_user sh -c "curl --proto '=https' --tlsv1.2 -sSf https://rsproxy.c
 # changing CARGO_HOME from Cargo's default of ${REMOTE_USER_HOME}/.cargo.
 install -d -m 0755 "$(dirname "${RUST_BIN_DIR}")"
 ln -sfn "${REMOTE_CARGO_HOME}/bin" "${RUST_BIN_DIR}"
-
-run_as_remote_user mkdir -p "${REMOTE_CARGO_HOME}/registry"
 
 echo "(*) Configuring Cargo registry mirrors..."
 

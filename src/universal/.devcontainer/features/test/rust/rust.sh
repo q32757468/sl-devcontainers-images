@@ -11,6 +11,10 @@ check "rust-src" bash -c "rustup component list --installed | grep -q '^rust-src
 check "excluded-components" bash -c "! rustup component list --installed | grep -Eq '^(rust-docs|llvm-tools|rust-analysis)-'"
 check "stable-toolchain" bash -c "rustup show active-toolchain | grep -q '^stable-'"
 check "cargo-home" bash -c 'test -z "${CARGO_HOME:-}" && test -d "${HOME}/.cargo"'
+check "cargo-registry-cache-link" bash -c '
+    test -L "${HOME}/.cargo/registry"
+    test "$(readlink "${HOME}/.cargo/registry")" = "${HOME}/.sl-cache/.cargo/registry"
+'
 check "cargo-config" bash -c '
     config="${HOME}/.cargo/config.toml"
     test -f "${config}"

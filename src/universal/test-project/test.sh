@@ -47,6 +47,13 @@ check "remote-user-homes" bash -c '
     test -d "${HOME}/.codex"
     test -d "${HOME}/.claude"
 '
+check "persistent-volume-links" bash -c '
+    set -e
+    test "$(readlink "${HOME}/.codex")" = "${HOME}/.sl-config/.codex"
+    test "$(readlink "${HOME}/.claude")" = "${HOME}/.sl-config/.claude"
+    test "$(readlink "${HOME}/.gemini")" = "${HOME}/.sl-config/.gemini"
+    test "$(readlink "${HOME}/.cargo/registry")" = "${HOME}/.sl-cache/.cargo/registry"
+'
 check "codex-final-config" bash -c '
     set -e
     config="${HOME}/.codex/config.toml"

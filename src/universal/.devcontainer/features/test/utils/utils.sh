@@ -7,6 +7,7 @@ check "utils-functions" bash -c '
     source /usr/local/share/devcontainer-features/utils/utils.sh
     declare -F get_remote_user_home >/dev/null
     declare -F run_as_remote_user >/dev/null
+    declare -F link_persistent_directory >/dev/null
     declare -F install_lifecycle_script >/dev/null
 '
 

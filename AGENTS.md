@@ -14,6 +14,12 @@ pnpm install
 source /usr/local/share/devcontainer-features/utils/utils.sh
 ```
 
+## 持久化卷
+
+- `sl-config` 挂载到 `~/.sl-config`，保存用户配置。
+- `sl-cache` 挂载到 `~/.sl-cache`，保存可复用缓存。
+- 新增持久化目录时，按用途归入其中一类，并使用 `utils.sh` 的公共函数将原生路径链接到对应卷目录；不要为同一卷增加重复 mount。
+
 ## 构建
 
 构建 `universal` Dev Container 镜像：

@@ -3,6 +3,10 @@
 source dev-container-features-test-lib
 
 check "codex" codex --version
+check "codex-config-link" bash -c '
+    test -L "${HOME}/.codex"
+    test "$(readlink "${HOME}/.codex")" = "${HOME}/.sl-config/.codex"
+'
 check "codex-config" bash -c '
     config="${HOME}/.codex/config.toml"
     test -f "${config}"

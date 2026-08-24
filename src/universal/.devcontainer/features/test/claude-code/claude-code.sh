@@ -3,6 +3,10 @@
 source dev-container-features-test-lib
 
 check "claude" claude --version
+check "claude-config-links" bash -c '
+    test -L "${HOME}/.claude"
+    test "$(readlink "${HOME}/.claude")" = "${HOME}/.sl-config/.claude"
+'
 check "claude-config" bash -c '
     test -f "${HOME}/.claude.json"
     test "$(jq -r ".autoUpdates" "${HOME}/.claude.json")" = "false"

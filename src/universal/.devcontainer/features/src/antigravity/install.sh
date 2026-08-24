@@ -11,6 +11,7 @@ INSTALL_DIR="/usr/local/share/antigravity"
 BIN_DIR="${INSTALL_DIR}/bin"
 GITHUB_API_URL="https://api.github.com/repos/google-antigravity/antigravity-cli/releases/latest"
 REMOTE_USER_HOME="$(get_remote_user_home)"
+link_persistent_directory config "${REMOTE_USER_HOME}/.gemini"
 SYSTEM_ARCH="$(uname -m)"
 
 case "${SYSTEM_ARCH}" in
@@ -90,10 +91,6 @@ fi
 
 tar -xzf "${ARCHIVE_PATH}" -C "${TEMP_DIR}" antigravity
 install -m 0755 "${TEMP_DIR}/antigravity" "${BIN_DIR}/agy"
-
-# Seed the mount point before the named volume is attached at container start.
-install -d -m 0755 "${REMOTE_USER_HOME}/.gemini"
-chown -R "${_REMOTE_USER}:${_REMOTE_USER}" "${REMOTE_USER_HOME}/.gemini"
 
 "${BIN_DIR}/agy" --version >/dev/null
 
