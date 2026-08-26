@@ -9,7 +9,7 @@ install_lifecycle_script github-cli post-create
 
 INSTALL_DIR="/usr/local/share/github-cli"
 GITHUB_API_URL="https://api.github.com/repos/cli/cli/releases/latest"
-GITHUB_RELEASE_MIRROR="${GITHUBRELEASEMIRROR-https://gh.hihsl.cn}"
+GITHUB_RELEASE_MIRROR="${GITHUBRELEASEMIRROR}"
 SYSTEM_ARCH="$(uname -m)"
 
 case "${SYSTEM_ARCH}" in

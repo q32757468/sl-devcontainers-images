@@ -10,7 +10,7 @@ install_lifecycle_script antigravity
 INSTALL_DIR="/usr/local/share/antigravity"
 BIN_DIR="${INSTALL_DIR}/bin"
 GITHUB_API_URL="https://api.github.com/repos/google-antigravity/antigravity-cli/releases/latest"
-GITHUB_RELEASE_MIRROR="${GITHUBRELEASEMIRROR-https://gh.hihsl.cn}"
+GITHUB_RELEASE_MIRROR="${GITHUBRELEASEMIRROR}"
 REMOTE_USER_HOME="$(get_remote_user_home)"
 link_persistent_directory config "${REMOTE_USER_HOME}/.gemini"
 SYSTEM_ARCH="$(uname -m)"
