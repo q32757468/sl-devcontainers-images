@@ -31,6 +31,7 @@
             "cacheBuster": "1"
         },
         "./features/src/agent-skills": "latest",
+        "./features/src/github-cli": "latest",
         "./features/src/patch-node": "latest",
         "./features/src/patch-python": "latest",
         "./features/src/antigravity": {
@@ -54,6 +55,7 @@
         "./features/src/rust",
         "./features/src/pnpm",
         "./features/src/agent-skills",
+        "./features/src/github-cli",
         "./features/src/antigravity",
         "./features/src/claude-code",
         "./features/src/codex"

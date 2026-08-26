@@ -3,21 +3,18 @@ set -euo pipefail
 
 source /usr/local/share/devcontainer-features/utils/utils.sh
 
-echo "(*) Installing Antigravity CLI..."
+echo "(*) Installing GitHub CLI..."
 
-install_lifecycle_script antigravity
+install_lifecycle_script github-cli post-create
 
-INSTALL_DIR="/usr/local/share/antigravity"
-BIN_DIR="${INSTALL_DIR}/bin"
-GITHUB_API_URL="https://api.github.com/repos/google-antigravity/antigravity-cli/releases/latest"
+INSTALL_DIR="/usr/local/share/github-cli"
+GITHUB_API_URL="https://api.github.com/repos/cli/cli/releases/latest"
 GITHUB_RELEASE_MIRROR="${GITHUBRELEASEMIRROR-https://gh.hihsl.cn}"
-REMOTE_USER_HOME="$(get_remote_user_home)"
-link_persistent_directory config "${REMOTE_USER_HOME}/.gemini"
 SYSTEM_ARCH="$(uname -m)"
 
 case "${SYSTEM_ARCH}" in
     x86_64 | amd64)
-        RELEASE_ARCH="x64"
+        RELEASE_ARCH="amd64"
         ;;
     aarch64 | arm64)
         RELEASE_ARCH="arm64"
@@ -27,17 +24,6 @@ case "${SYSTEM_ARCH}" in
         exit 1
         ;;
 esac
-
-ASSET_NAME="agy_cli_linux_${RELEASE_ARCH}.tar.gz"
-TEMP_DIR="$(mktemp -d)"
-ARCHIVE_PATH="${TEMP_DIR}/${ASSET_NAME}"
-
-cleanup() {
-    rm -rf -- "${TEMP_DIR}"
-}
-trap cleanup EXIT
-
-install -d -m 0755 "${BIN_DIR}"
 
 if command -v curl >/dev/null 2>&1; then
     DOWNLOADER="curl"
@@ -53,10 +39,10 @@ fetch_url() {
         curl --fail --location --silent --show-error --retry 3 \
             --connect-timeout 10 \
             -H "Accept: application/vnd.github+json" \
-            -A "sl-devcontainers-images-antigravity-feature" "$1"
+            -A "sl-devcontainers-images-github-cli-feature" "$1"
     else
         wget --quiet --header="Accept: application/vnd.github+json" \
-            --user-agent="sl-devcontainers-images-antigravity-feature" -O - "$1"
+            --user-agent="sl-devcontainers-images-github-cli-feature" -O - "$1"
     fi
 }
 
@@ -69,34 +55,45 @@ download_file() {
     fi
 }
 
-echo "(*) Resolving the latest Antigravity CLI release..."
+echo "(*) Resolving the latest GitHub CLI release..."
 RELEASE_JSON="$(fetch_url "${GITHUB_API_URL}")"
 RELEASE_TAG="$(printf '%s\n' "${RELEASE_JSON}" | sed -n 's/.*"tag_name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')"
-GITHUB_DOWNLOAD_URL="$(printf '%s\n' "${RELEASE_JSON}" | sed -n 's|.*"browser_download_url"[[:space:]]*:[[:space:]]*"\(https://github\.com/google-antigravity/antigravity-cli/releases/download/[^\"]*/'"${ASSET_NAME}"'\)".*|\1|p')"
 
-if [[ -z "${RELEASE_TAG}" || -z "${GITHUB_DOWNLOAD_URL}" ]]; then
-    echo "Fatal: Could not find the latest Linux ${RELEASE_ARCH} Antigravity release asset (${ASSET_NAME})." >&2
+if [[ -z "${RELEASE_TAG}" || "${RELEASE_TAG}" != v* ]]; then
+    echo "Fatal: Could not resolve the latest GitHub CLI release." >&2
     exit 1
 fi
 
 VERSION="${RELEASE_TAG#v}"
+ASSET_NAME="gh_${VERSION}_linux_${RELEASE_ARCH}.tar.gz"
+GITHUB_DOWNLOAD_URL="https://github.com/cli/cli/releases/download/${RELEASE_TAG}/${ASSET_NAME}"
 if [[ -n "${GITHUB_RELEASE_MIRROR}" ]]; then
     DOWNLOAD_URL="${GITHUB_RELEASE_MIRROR%/}/${GITHUB_DOWNLOAD_URL}"
 else
     DOWNLOAD_URL="${GITHUB_DOWNLOAD_URL}"
 fi
 
-echo "(*) Downloading Antigravity CLI ${VERSION}..."
+TEMP_DIR="$(mktemp -d)"
+ARCHIVE_PATH="${TEMP_DIR}/${ASSET_NAME}"
+
+cleanup() {
+    rm -rf -- "${TEMP_DIR}"
+}
+trap cleanup EXIT
+
+echo "(*) Downloading GitHub CLI ${VERSION}..."
 download_file "${DOWNLOAD_URL}" "${ARCHIVE_PATH}"
 
-if ! tar -tzf "${ARCHIVE_PATH}" antigravity >/dev/null 2>&1; then
-    echo "Fatal: The Antigravity release archive does not contain the antigravity binary." >&2
+ARCHIVE_ROOT="gh_${VERSION}_linux_${RELEASE_ARCH}"
+if ! tar -tzf "${ARCHIVE_PATH}" "${ARCHIVE_ROOT}/bin/gh" >/dev/null 2>&1; then
+    echo "Fatal: The GitHub CLI release archive does not contain the gh binary." >&2
     exit 1
 fi
 
-tar -xzf "${ARCHIVE_PATH}" -C "${TEMP_DIR}" antigravity
-install -m 0755 "${TEMP_DIR}/antigravity" "${BIN_DIR}/agy"
+install -d -m 0755 "${INSTALL_DIR}"
+tar -xzf "${ARCHIVE_PATH}" -C "${INSTALL_DIR}" --strip-components=1
+chmod 0755 "${INSTALL_DIR}/bin/gh"
 
-"${BIN_DIR}/agy" --version >/dev/null
+"${INSTALL_DIR}/bin/gh" --version >/dev/null
 
 echo "Done!"

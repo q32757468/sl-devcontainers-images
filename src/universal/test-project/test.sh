@@ -22,6 +22,7 @@ check "node" node --version
 check "npm" npm --version
 check "nvm" bash -c ". /usr/local/share/nvm/nvm.sh && nvm --version"
 check "pnpm" pnpm --version
+check "gh" gh --version
 check "codex" codex --version
 check "agy" agy --version
 check "claude" claude --version

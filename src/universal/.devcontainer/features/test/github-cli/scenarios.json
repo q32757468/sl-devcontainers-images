@@ -1,0 +1,16 @@
+{
+    "github-cli": {
+        "image": "ubuntu:noble",
+        "remoteUser": "ubuntu",
+        "features": {
+            "ghcr.nju.edu.cn/devcontainers/features/common-utils:2": {},
+            "utils": {},
+            "github-cli": {}
+        },
+        "overrideFeatureInstallOrder": [
+            "ghcr.nju.edu.cn/devcontainers/features/common-utils:2",
+            "./utils",
+            "./github-cli"
+        ]
+    }
+}

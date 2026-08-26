@@ -1,0 +1,22 @@
+{
+    "id": "github-cli",
+    "version": "1.0.0",
+    "name": "GitHub CLI",
+    "description": "Install the latest GitHub CLI release through a configurable download mirror.",
+    "installsAfter": [
+        "./utils"
+    ],
+    "options": {
+        "githubReleaseMirror": {
+            "type": "string",
+            "default": "https://gh.hihsl.cn",
+            "description": "URL prefix used to accelerate downloads from GitHub Releases. Set to an empty string to download directly."
+        }
+    },
+    "containerEnv": {
+        "PATH": "/usr/local/share/github-cli/bin:${PATH}"
+    },
+    "postCreateCommand": [
+        "/usr/local/share/devcontainer-features/github-cli/post-create.sh"
+    ]
+}

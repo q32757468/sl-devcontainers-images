@@ -7,6 +7,11 @@
         "./utils"
     ],
     "options": {
+        "githubReleaseMirror": {
+            "type": "string",
+            "default": "https://gh.hihsl.cn",
+            "description": "URL prefix used to accelerate downloads from GitHub Releases. Set to an empty string to download directly."
+        },
         "cacheBuster": {
             "type": "string",
             "default": "",
