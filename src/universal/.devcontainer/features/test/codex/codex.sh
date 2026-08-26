@@ -33,5 +33,14 @@ check "attentive-plugin-cache" bash -c '
     test -n "${manifest}"
     grep -Fq "\"name\": \"attentive-codex-notify\"" "${manifest}"
 '
+check "attentive-plugin-marketplace-migration" bash -c '
+    config="${HOME}/.codex/config.toml"
+    old_source="$(mktemp -d)"
+    trap '\''rm -rf -- "${old_source}"'\'' EXIT
+    cp -a /usr/local/share/codex/marketplaces/attentive/. "${old_source}/"
+    sed -i "s|^source = \"/usr/local/share/codex/marketplaces/attentive\"$|source = \"${old_source}\"|" "${config}"
+    /usr/local/share/devcontainer-features/codex/post-create.sh
+    grep -Fxq "source = \"/usr/local/share/codex/marketplaces/attentive\"" "${config}"
+'
 
 reportResults
