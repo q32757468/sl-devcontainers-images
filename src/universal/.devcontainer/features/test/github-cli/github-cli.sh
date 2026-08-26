@@ -7,14 +7,22 @@ check "gh" gh --version
 check "gh-install-dir" test -x /usr/local/share/github-cli/bin/gh
 check "gh-path" bash -c 'test "$(command -v gh)" = "/usr/local/share/github-cli/bin/gh"'
 check "github-cli-post-create" test -x /usr/local/share/devcontainer-features/github-cli/post-create.sh
-check "load-vscode-git-token" bash -c '
+check "persist-vscode-git-token" bash -c '
     temp_dir="$(mktemp -d)"
     trap '\''rm -rf -- "${temp_dir}"'\'' EXIT
     printf '\''#!/usr/bin/env bash\nprintf "password=test-token\\n"\n'\'' > "${temp_dir}/git"
+    printf '\''#!/usr/bin/env bash
+test "$1" = "auth"
+test "$2" = "login"
+test "$3" = "--hostname"
+test "$4" = "github.com"
+test "$5" = "--with-token"
+test "$(cat)" = "test-token"
+'\'' > "${temp_dir}/gh"
     chmod +x "${temp_dir}/git"
+    chmod +x "${temp_dir}/gh"
     PATH="${temp_dir}:${PATH}"
     source /usr/local/share/devcontainer-features/github-cli/post-create.sh
-    test "${GH_TOKEN:-}" = "test-token"
 '
 check "ignore-missing-git-token" bash -c '
     temp_dir="$(mktemp -d)"

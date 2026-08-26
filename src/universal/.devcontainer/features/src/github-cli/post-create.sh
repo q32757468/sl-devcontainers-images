@@ -11,7 +11,10 @@ _load_gh_token() {
       sed -n 's/^password=//p'
   )" || return 0
 
-  [ -n "$token" ] && export GH_TOKEN="$token"
+  if [ -n "$token" ]; then
+    printf '%s\n' "$token" |
+      gh auth login --hostname github.com --with-token
+  fi
 
   unset token
 }
