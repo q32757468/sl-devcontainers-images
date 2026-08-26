@@ -6,6 +6,11 @@
         "./pnpm"
     ],
     "options": {
+        "githubMirror": {
+            "type": "string",
+            "default": "https://gh.hihsl.cn/",
+            "description": "URL prefix used to accelerate downloads from GitHub. Set to an empty string to download directly."
+        },
         "cacheBuster": {
             "type": "string",
             "default": "",
@@ -21,5 +26,8 @@
     ],
     "postStartCommand": [
         "/usr/local/share/devcontainer-features/codex/post-start.sh"
+    ],
+    "postCreateCommand": [
+        "/usr/local/share/devcontainer-features/codex/post-create.sh"
     ]
 }

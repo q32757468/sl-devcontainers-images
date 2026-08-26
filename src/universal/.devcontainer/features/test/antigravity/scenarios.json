@@ -6,6 +6,7 @@
             "ghcr.nju.edu.cn/devcontainers/features/common-utils:2": {},
             "utils": {},
             "antigravity": {
+                "githubMirror": "https://gh.hihsl.cn/",
                 "cacheBuster": "test"
             }
         },

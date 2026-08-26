@@ -9,7 +9,7 @@ install_lifecycle_script github-cli post-create
 
 INSTALL_DIR="/usr/local/share/github-cli"
 GITHUB_API_URL="https://api.github.com/repos/cli/cli/releases/latest"
-GITHUB_RELEASE_MIRROR="${GITHUBRELEASEMIRROR}"
+GITHUB_MIRROR="${GITHUBMIRROR}"
 SYSTEM_ARCH="$(uname -m)"
 
 case "${SYSTEM_ARCH}" in
@@ -67,8 +67,8 @@ fi
 VERSION="${RELEASE_TAG#v}"
 ASSET_NAME="gh_${VERSION}_linux_${RELEASE_ARCH}.tar.gz"
 GITHUB_DOWNLOAD_URL="https://github.com/cli/cli/releases/download/${RELEASE_TAG}/${ASSET_NAME}"
-if [[ -n "${GITHUB_RELEASE_MIRROR}" ]]; then
-    DOWNLOAD_URL="${GITHUB_RELEASE_MIRROR%/}/${GITHUB_DOWNLOAD_URL}"
+if [[ -n "${GITHUB_MIRROR}" ]]; then
+    DOWNLOAD_URL="${GITHUB_MIRROR%/}/${GITHUB_DOWNLOAD_URL}"
 else
     DOWNLOAD_URL="${GITHUB_DOWNLOAD_URL}"
 fi

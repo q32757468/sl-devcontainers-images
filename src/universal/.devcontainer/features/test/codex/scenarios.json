@@ -12,7 +12,9 @@
                 "nodeGypDependencies": false
             },
             "pnpm": {},
-            "codex": {}
+            "codex": {
+                "githubMirror": "https://gh.hihsl.cn/"
+            }
         },
         "overrideFeatureInstallOrder": [
             "ghcr.nju.edu.cn/devcontainers/features/common-utils:2",

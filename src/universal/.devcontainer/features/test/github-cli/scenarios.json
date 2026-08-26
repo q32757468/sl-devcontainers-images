@@ -5,7 +5,9 @@
         "features": {
             "ghcr.nju.edu.cn/devcontainers/features/common-utils:2": {},
             "utils": {},
-            "github-cli": {}
+            "github-cli": {
+                "githubMirror": "https://gh.hihsl.cn/"
+            }
         },
         "overrideFeatureInstallOrder": [
             "ghcr.nju.edu.cn/devcontainers/features/common-utils:2",
