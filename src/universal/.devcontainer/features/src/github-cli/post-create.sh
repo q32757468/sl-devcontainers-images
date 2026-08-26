@@ -7,7 +7,7 @@ _load_gh_token() {
 
   token="$(
     printf 'protocol=https\nhost=github.com\n\n' |
-      git credential fill 2>/dev/null |
+      GIT_TERMINAL_PROMPT=0 git credential fill 2>/dev/null |
       sed -n 's/^password=//p'
   )" || return 0
 
