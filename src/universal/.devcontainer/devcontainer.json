@@ -74,7 +74,8 @@
                 "charliermarsh.ruff",
                 "eamodio.gitlens",
                 "esbenp.prettier-vscode",
-                "chrisvltn.log-wrapper-for-vscode"
+                "chrisvltn.log-wrapper-for-vscode",
+                "32757468.attentive-vscode"
             ]
         }
     }
