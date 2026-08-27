@@ -20,17 +20,19 @@ CHROME_DOWNLOAD_BASE_URL="${PUPPETEER_CHROME_DOWNLOAD_BASE_URL:-${PUPPETEER_DOWN
 
 run_as_remote_user mkdir -p "${PUPPETEER_CACHE_DIR}"
 
-# Puppeteer's dependency installation requires root on Debian-based images.
-apt-get update
+# Install the browser with Puppeteer, but let Playwright install the system
+# dependencies because its dependency set also includes fonts and is more
+# comprehensive.
 PUPPETEER_CACHE_DIR="${PUPPETEER_CACHE_DIR}" \
     puppeteer browsers install chrome \
-        --base-url "${CHROME_DOWNLOAD_BASE_URL}" \
-        --install-deps
+        --base-url "${CHROME_DOWNLOAD_BASE_URL}"
+
+pnpx -y playwright install-deps chromium
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 
-# The browser was installed as root so that Puppeteer could install its system
-# dependencies. Return cache ownership to the user that runs agent-browser.
+# The browser was installed as root. Return cache ownership to the user that
+# runs agent-browser.
 chown -R "${_REMOTE_USER}" "${PUPPETEER_CACHE_DIR}"
 
 # Install the agent-browser CLI globally as the remote user.
