@@ -1,0 +1,24 @@
+{
+    "id": "herdr",
+    "version": "1.0.0",
+    "name": "Herdr",
+    "description": "Install Herdr, the terminal runtime for coding agents.",
+    "installsAfter": [
+        "./utils"
+    ],
+    "options": {
+        "githubMirror": {
+            "type": "string",
+            "default": "https://gh.hihsl.cn/",
+            "description": "URL prefix used to accelerate downloads from GitHub. Set to an empty string to download directly."
+        },
+        "cacheBuster": {
+            "type": "string",
+            "default": "",
+            "description": "Change this value to force a fresh Herdr installation during image builds."
+        }
+    },
+    "containerEnv": {
+        "PATH": "/usr/local/share/herdr/bin:${PATH}"
+    }
+}

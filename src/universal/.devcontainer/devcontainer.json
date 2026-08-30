@@ -34,6 +34,7 @@
         "./features/src/github-cli": "latest",
         "./features/src/patch-node": "latest",
         "./features/src/patch-python": "latest",
+        "./features/src/herdr": "latest",
         "./features/src/antigravity": {
             "cacheBuster": "1"
         },
@@ -56,6 +57,7 @@
         "./features/src/pnpm",
         "./features/src/agent-skills",
         "./features/src/github-cli",
+        "./features/src/herdr",
         "./features/src/antigravity",
         "./features/src/claude-code",
         "./features/src/codex"

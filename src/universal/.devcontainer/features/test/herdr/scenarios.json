@@ -1,0 +1,18 @@
+{
+    "herdr": {
+        "image": "ubuntu:noble",
+        "remoteUser": "ubuntu",
+        "features": {
+            "ghcr.nju.edu.cn/devcontainers/features/common-utils:2": {},
+            "utils": {},
+            "herdr": {
+                "githubMirror": "https://gh.hihsl.cn/"
+            }
+        },
+        "overrideFeatureInstallOrder": [
+            "ghcr.nju.edu.cn/devcontainers/features/common-utils:2",
+            "./utils",
+            "./herdr"
+        ]
+    }
+}
