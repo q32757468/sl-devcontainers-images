@@ -9,16 +9,17 @@ INSTALL_DIR="/usr/local/share/herdr/bin"
 INSTALL_SCRIPT_URL="https://herdr.dev/install.sh"
 GITHUB_MIRROR="${GITHUBMIRROR}"
 
-install -d -m 0755 "${INSTALL_DIR}"
+install -d -m 0755 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" "${INSTALL_DIR}"
 
 if [[ -n "${GITHUB_MIRROR}" ]]; then
     INSTALL_SCRIPT="$(download_install_script_with_github_proxy \
         "${INSTALL_SCRIPT_URL}" "${GITHUB_MIRROR}")"
-    HERDR_INSTALL_DIR="${INSTALL_DIR}" "${INSTALL_SCRIPT}"
+    run_as_remote_user env HERDR_INSTALL_DIR="${INSTALL_DIR}" "${INSTALL_SCRIPT}"
 else
-    curl -fsSL "${INSTALL_SCRIPT_URL}" | HERDR_INSTALL_DIR="${INSTALL_DIR}" /bin/sh
+    curl -fsSL "${INSTALL_SCRIPT_URL}" \
+        | run_as_remote_user env HERDR_INSTALL_DIR="${INSTALL_DIR}" /bin/sh
 fi
 
-"${INSTALL_DIR}/herdr" --version >/dev/null
+run_as_remote_user "${INSTALL_DIR}/herdr" --version >/dev/null
 
 echo "Done!"
