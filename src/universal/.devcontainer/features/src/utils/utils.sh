@@ -106,3 +106,114 @@ install_lifecycle_script() {
     install -d -m 0755 "${runtime_dir}"
     install -m 0755 "${source_script}" "${runtime_dir}/${lifecycle_name}.sh"
 }
+
+# Download an install script and prefix its GitHub Release download URLs with
+# the supplied proxy URL. Runtime curl/wget calls are wrapped as well, so URLs
+# obtained dynamically from an API or manifest are also proxied. Prints the
+# path to a self-cleaning local launcher.
+download_install_script_with_github_proxy() {
+    local script_url="${1:?Usage: download_install_script_with_github_proxy <script-url> <proxy-url>}"
+    local proxy_url="${2:?Usage: download_install_script_with_github_proxy <script-url> <proxy-url>}"
+    local runtime_dir
+    local downloaded_script
+    local rewritten_script
+    local escaped_proxy_url
+    local downloader
+    local downloader_path
+
+    proxy_url="${proxy_url%/}/"
+    runtime_dir="$(mktemp -d "${TMPDIR:-/tmp}/proxied-installer.XXXXXX")"
+    downloaded_script="${runtime_dir}/install.sh.download"
+    rewritten_script="${runtime_dir}/install.sh"
+    install -d -m 0755 "${runtime_dir}/bin"
+    : >"${runtime_dir}/.runtime"
+    printf '%s\n' "${proxy_url}" >"${runtime_dir}/proxy-url"
+
+    if command -v curl >/dev/null 2>&1; then
+        if ! curl -fsSL "${script_url}" -o "${downloaded_script}"; then
+            rm -rf "${runtime_dir}"
+            return 1
+        fi
+    elif command -v wget >/dev/null 2>&1; then
+        if ! wget -qO "${downloaded_script}" "${script_url}"; then
+            rm -rf "${runtime_dir}"
+            return 1
+        fi
+    else
+        echo "Either curl or wget is required to download ${script_url}." >&2
+        rm -rf "${runtime_dir}"
+        return 1
+    fi
+
+    escaped_proxy_url="$(printf '%s' "${proxy_url}" | sed 's/[&|\\]/\\&/g')"
+    if ! sed -E \
+        "s|https://github\\.com/[[:alnum:]_.-]+/[[:alnum:]_.-]+/releases/download/|${escaped_proxy_url}&|g" \
+        "${downloaded_script}" >"${rewritten_script}"; then
+        rm -rf "${runtime_dir}"
+        return 1
+    fi
+
+    rm -f "${downloaded_script}"
+    chmod 0755 "${rewritten_script}"
+
+    cat >"${runtime_dir}/bin/download-with-github-proxy" <<'EOF'
+#!/usr/bin/env bash
+set -e
+
+wrapper_dir="$(CDPATH= cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+runtime_dir="$(dirname -- "${wrapper_dir}")"
+downloader="${0##*/}"
+proxy_url="$(<"${runtime_dir}/proxy-url")"
+downloader_path="$(<"${runtime_dir}/${downloader}-path")"
+rewritten_args=()
+
+for argument in "$@"; do
+    case "${argument}" in
+        https://github.com/*/*/releases/download/*)
+            argument="${proxy_url}${argument}"
+            ;;
+        --url=https://github.com/*/*/releases/download/*)
+            argument="--url=${proxy_url}${argument#--url=}"
+            ;;
+    esac
+    rewritten_args+=("${argument}")
+done
+
+exec "${downloader_path}" "${rewritten_args[@]}"
+EOF
+    chmod 0755 "${runtime_dir}/bin/download-with-github-proxy"
+
+    for downloader in curl wget; do
+        if downloader_path="$(command -v "${downloader}" 2>/dev/null)"; then
+            printf '%s\n' "${downloader_path}" >"${runtime_dir}/${downloader}-path"
+            ln -s download-with-github-proxy "${runtime_dir}/bin/${downloader}"
+        fi
+    done
+
+    cat >"${runtime_dir}/run.sh" <<'EOF'
+#!/bin/sh
+set -e
+
+runtime_dir="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+cleanup() {
+    case "${runtime_dir##*/}" in
+        proxied-installer.*)
+            if [ -f "${runtime_dir}/.runtime" ]; then
+                rm -rf -- "${runtime_dir}"
+            fi
+            ;;
+    esac
+}
+trap cleanup EXIT HUP INT TERM
+
+export PATH="${runtime_dir}/bin:${PATH}"
+"${runtime_dir}/install.sh" "$@"
+EOF
+    chmod 0755 "${runtime_dir}/run.sh"
+
+    if [[ -n "${_REMOTE_USER:-}" ]] && id "${_REMOTE_USER}" >/dev/null 2>&1; then
+        chown -R "${_REMOTE_USER}:${_REMOTE_USER}" "${runtime_dir}"
+    fi
+
+    printf '%s\n' "${runtime_dir}/run.sh"
+}

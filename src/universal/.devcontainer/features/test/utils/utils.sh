@@ -9,6 +9,93 @@ check "utils-functions" bash -c '
     declare -F run_as_remote_user >/dev/null
     declare -F link_persistent_directory >/dev/null
     declare -F install_lifecycle_script >/dev/null
+    declare -F download_install_script_with_github_proxy >/dev/null
+'
+
+check "github-release-proxy" bash -c '
+    set -e
+    test_dir="$(mktemp -d)"
+    trap '\''rm -rf "${test_dir}"'\'' EXIT
+
+    cat >"${test_dir}/source.sh" <<'\''EOF'\''
+#!/usr/bin/env bash
+set -e
+static_url=https://github.com/example/tool/releases/download/v1.2.3/tool.tar.gz
+homepage=https://github.com/example/tool
+release_url="https://github.com/${TEST_OWNER}/${TEST_REPOSITORY}/releases/download/v2.0.0/tool.tar.gz"
+curl -fsSL --retry 3 "${release_url}" -o "${TEST_CURL_OUTPUT}"
+wget -qO "${TEST_WGET_OUTPUT}" "${release_url}"
+curl -fsSL "https://example.com/ordinary-download" -o "${TEST_ORDINARY_OUTPUT}"
+EOF
+
+    cat >"${test_dir}/curl" <<'\''EOF'\''
+#!/usr/bin/env bash
+printf '\''%s\n'\'' "$*" >>"${TEST_CURL_LOG}"
+output=""
+source_url=""
+while (($#)); do
+    if [[ "$1" == "-o" ]]; then
+        output="$2"
+        shift
+    elif [[ "$1" == "https://example.test/install.sh" ]]; then
+        source_url="$1"
+    fi
+    shift
+done
+if [[ -n "${source_url}" ]]; then
+    cp "${TEST_INSTALL_SCRIPT}" "${output}"
+else
+    : >"${output}"
+fi
+EOF
+    chmod +x "${test_dir}/curl"
+
+    cat >"${test_dir}/wget" <<'\''EOF'\''
+#!/usr/bin/env bash
+printf '\''%s\n'\'' "$*" >>"${TEST_WGET_LOG}"
+while (($#)); do
+    if [[ "$1" == "-qO" ]]; then
+        : >"$2"
+        exit
+    fi
+    shift
+done
+exit 1
+EOF
+    chmod +x "${test_dir}/wget"
+
+    export TEST_INSTALL_SCRIPT="${test_dir}/source.sh"
+    export TEST_CURL_LOG="${test_dir}/curl.log"
+    export TEST_WGET_LOG="${test_dir}/wget.log"
+    export TEST_CURL_OUTPUT="${test_dir}/curl-output"
+    export TEST_WGET_OUTPUT="${test_dir}/wget-output"
+    export TEST_ORDINARY_OUTPUT="${test_dir}/ordinary-output"
+    export TEST_OWNER="example"
+    export TEST_REPOSITORY="dynamic-tool"
+    PATH="${test_dir}:${PATH}"
+    source /usr/local/share/devcontainer-features/utils/utils.sh
+    launcher="$(download_install_script_with_github_proxy \
+        https://example.test/install.sh https://gh.hihsl.cn/)"
+
+    test -x "${launcher}"
+    runtime_dir="$(dirname "${launcher}")"
+    grep -Fq \
+        "https://gh.hihsl.cn/https://github.com/example/tool/releases/download/v1.2.3/tool.tar.gz" \
+        "${runtime_dir}/install.sh"
+    grep -Fxq "homepage=https://github.com/example/tool" "${runtime_dir}/install.sh"
+
+    sh "${launcher}"
+
+    grep -Fq -- \
+        "-fsSL --retry 3 https://gh.hihsl.cn/https://github.com/example/dynamic-tool/releases/download/v2.0.0/tool.tar.gz -o ${TEST_CURL_OUTPUT}" \
+        "${TEST_CURL_LOG}"
+    grep -Fq -- \
+        "-qO ${TEST_WGET_OUTPUT} https://gh.hihsl.cn/https://github.com/example/dynamic-tool/releases/download/v2.0.0/tool.tar.gz" \
+        "${TEST_WGET_LOG}"
+    grep -Fq -- \
+        "-fsSL https://example.com/ordinary-download -o ${TEST_ORDINARY_OUTPUT}" \
+        "${TEST_CURL_LOG}"
+    test ! -e "${runtime_dir}"
 '
 
 reportResults
