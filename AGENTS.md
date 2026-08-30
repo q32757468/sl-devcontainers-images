@@ -14,6 +14,8 @@ pnpm install
 source /usr/local/share/devcontainer-features/utils/utils.sh
 ```
 
+Feature 中安装任何工具或环境时，必须以容器用户身份安装，不得使用 `root`。
+
 ## 持久化卷
 
 - `sl-config` 挂载到 `~/.sl-config`，保存用户配置。
