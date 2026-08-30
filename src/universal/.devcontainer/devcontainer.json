@@ -38,7 +38,7 @@
             "cacheBuster": "1"
         },
         "./features/src/claude-code": {
-            "cacheBuster": "1.5"
+            "cacheBuster": "1.6"
         },
         "./features/src/codex": {
             "cacheBuster": "1.5"
