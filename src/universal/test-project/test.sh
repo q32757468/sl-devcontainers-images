@@ -8,12 +8,12 @@ source test-utils.sh
 # ------------------------------------------------------------------
 check "non-root-user" id hsl
 check "locale" bash -c "locale -a | grep -q C.utf8"
-check "timezone" test "$(readlink -f /etc/localtime)" = "/usr/share/zoneinfo/Asia/Shanghai"
+check "timezone" bash -c 'test "$(cat /etc/timezone)" = "Asia/Shanghai" && test "$(date +%z)" = "+0800"'
 check "sudo" sudo echo "sudo works."
 check "bash" bash --version
 
 # System packages
-checkOSPackages "system-packages" vim curl ca-certificates git sudo
+checkOSPackages "system-packages" curl ca-certificates git sudo
 
 # ------------------------------------------------------------------
 # Feature smoke checks

@@ -2,8 +2,8 @@
     "uv": {
         "image": "ubuntu:noble",
         "remoteUser": "ubuntu",
+        // Intentionally independent: the Python Feature installs the prerequisites.
         "features": {
-            "ghcr.nju.edu.cn/devcontainers/features/common-utils:2": {},
             "ghcr.nju.edu.cn/devcontainers/features/python:1": {
                 "version": "os-provided",
                 "useOryxIfAvailable": "false",
@@ -15,7 +15,6 @@
             }
         },
         "overrideFeatureInstallOrder": [
-            "ghcr.nju.edu.cn/devcontainers/features/common-utils:2",
             "ghcr.nju.edu.cn/devcontainers/features/python:1",
             "./utils",
             "./uv"

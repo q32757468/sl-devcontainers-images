@@ -2,8 +2,8 @@
     "codex": {
         "image": "ubuntu:noble",
         "remoteUser": "ubuntu",
+        // Intentionally independent: Node and pnpm provide all prerequisites here.
         "features": {
-            "ghcr.nju.edu.cn/devcontainers/features/common-utils:2": {},
             "utils": {},
             "patch-node": {},
             "ghcr.nju.edu.cn/devcontainers/features/node:2": {
@@ -17,7 +17,6 @@
             }
         },
         "overrideFeatureInstallOrder": [
-            "ghcr.nju.edu.cn/devcontainers/features/common-utils:2",
             "./utils",
             "./patch-node",
             "ghcr.nju.edu.cn/devcontainers/features/node:2",

@@ -2,6 +2,7 @@
     "apt-source": {
         "image": "ubuntu:noble",
         "remoteUser": "ubuntu",
+        // Keep this scenario independent so it tests apt-source itself.
         "features": {
             "apt-source": {}
         }

@@ -2,8 +2,8 @@
     "pnpm": {
         "image": "ubuntu:noble",
         "remoteUser": "ubuntu",
+        // Intentionally independent: the Node Feature provides the prerequisites.
         "features": {
-            "ghcr.nju.edu.cn/devcontainers/features/common-utils:2": {},
             "utils": {},
             "patch-node": {},
             "ghcr.nju.edu.cn/devcontainers/features/node:2": {
@@ -14,7 +14,6 @@
             "pnpm": {}
         },
         "overrideFeatureInstallOrder": [
-            "ghcr.nju.edu.cn/devcontainers/features/common-utils:2",
             "./utils",
             "./patch-node",
             "ghcr.nju.edu.cn/devcontainers/features/node:2",

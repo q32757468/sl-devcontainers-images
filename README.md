@@ -4,7 +4,7 @@
 
 ## 特性
 
-- 基于 `ubuntu:noble`，默认时区为 `Asia/Shanghai`
+- 基于 `ubuntu:noble`，默认时区为 `Asia/Shanghai`（UTC+8）
 - 通过 Dev Container Features 安装和配置：
   - Node.js 24，并额外安装 Node.js 22
   - Python（使用系统提供的 Python 3.12）

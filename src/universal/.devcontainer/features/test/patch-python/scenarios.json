@@ -2,13 +2,12 @@
     "patch-python": {
         "image": "ubuntu:noble",
         "remoteUser": "ubuntu",
+        // Intentionally independent: this only verifies patch-python configuration.
         "features": {
-            "ghcr.nju.edu.cn/devcontainers/features/common-utils:2": {},
             "utils": {},
             "patch-python": {}
         },
         "overrideFeatureInstallOrder": [
-            "ghcr.nju.edu.cn/devcontainers/features/common-utils:2",
             "./utils",
             "./patch-python"
         ]

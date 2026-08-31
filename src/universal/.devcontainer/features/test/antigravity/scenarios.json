@@ -2,7 +2,10 @@
     "antigravity": {
         "image": "ubuntu:noble",
         "remoteUser": "ubuntu",
+        // apt-source must precede common-utils:2 for its apt-based package installation.
+        // common-utils:2 provides curl/wget for installation and jq for configuration.
         "features": {
+            "apt-source": {},
             "ghcr.nju.edu.cn/devcontainers/features/common-utils:2": {},
             "utils": {},
             "antigravity": {
@@ -10,7 +13,9 @@
                 "cacheBuster": "test"
             }
         },
+        // Keep apt-source before common-utils:2.
         "overrideFeatureInstallOrder": [
+            "./apt-source",
             "ghcr.nju.edu.cn/devcontainers/features/common-utils:2",
             "./utils",
             "./antigravity"

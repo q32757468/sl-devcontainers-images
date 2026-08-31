@@ -2,7 +2,10 @@
     "agent-skills": {
         "image": "ubuntu:noble",
         "remoteUser": "ubuntu",
+        // apt-source must precede common-utils:2 for its apt-based package installation.
+        // common-utils:2 provides unzip needed for Chrome for Testing extraction.
         "features": {
+            "apt-source": {},
             "ghcr.nju.edu.cn/devcontainers/features/common-utils:2": {},
             "utils": {},
             "patch-node": {},
@@ -16,7 +19,9 @@
                 "chromeDownloadBaseUrl": "https://cdn.npmmirror.com/binaries/chrome-for-testing"
             }
         },
+        // Keep apt-source before common-utils:2.
         "overrideFeatureInstallOrder": [
+            "./apt-source",
             "ghcr.nju.edu.cn/devcontainers/features/common-utils:2",
             "./utils",
             "./patch-node",

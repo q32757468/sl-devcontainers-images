@@ -2,7 +2,10 @@
     "patch-node": {
         "image": "ubuntu:noble",
         "remoteUser": "ubuntu",
+        // apt-source must precede common-utils:2 for its apt-based package installation.
+        // common-utils:2 provides sudo for the build-user assertion.
         "features": {
+            "apt-source": {},
             "ghcr.nju.edu.cn/devcontainers/features/common-utils:2": {},
             "utils": {},
             "patch-node": {},
@@ -14,7 +17,9 @@
                 "nodeGypDependencies": false
             }
         },
+        // Keep apt-source before common-utils:2.
         "overrideFeatureInstallOrder": [
+            "./apt-source",
             "ghcr.nju.edu.cn/devcontainers/features/common-utils:2",
             "./utils",
             "./patch-node",
