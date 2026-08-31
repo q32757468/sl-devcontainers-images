@@ -46,6 +46,8 @@ pnpm test:features
 
 Feature 测试位于 `src/universal/.devcontainer/features/test/<feature>/`。新增或修改 Feature 时，应同步维护对应的 scenario 和断言脚本。
 
+新增 Feature 测试的 `scenarios.json` 时，非必要不要添加 `apt-source` 和 `ghcr.nju.edu.cn/devcontainers/features/common-utils:2`，以免拖慢测试。若确认因系统依赖缺失等原因确有必要，必须同时添加二者，不得只添加其一。
+
 启动完整 `universal` Dev Container 并运行集成测试：
 
 ```bash
