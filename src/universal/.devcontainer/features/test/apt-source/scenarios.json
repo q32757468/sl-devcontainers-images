@@ -1,0 +1,9 @@
+{
+    "apt-source": {
+        "image": "ubuntu:noble",
+        "remoteUser": "ubuntu",
+        "features": {
+            "apt-source": {}
+        }
+    }
+}

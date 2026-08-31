@@ -4,6 +4,7 @@
         "context": "."
     },
     "features": {
+        "./features/src/apt-source": "latest",
         "ghcr.nju.edu.cn/devcontainers/features/common-utils:2": {
             "username": "${localEnv:LOGNAME}",
             "userUid": "1000",
@@ -46,6 +47,7 @@
         }
     },
     "overrideFeatureInstallOrder": [
+        "./features/src/apt-source",
         "ghcr.nju.edu.cn/devcontainers/features/common-utils",
         "./features/src/utils",
         "./features/src/patch-node",

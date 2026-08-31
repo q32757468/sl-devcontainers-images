@@ -1,0 +1,6 @@
+{
+    "id": "apt-source",
+    "version": "1.0.0",
+    "name": "APT Source",
+    "description": "Configure Ubuntu APT to use Tsinghua University's HTTP mirror."
+}

@@ -9,18 +9,10 @@ RUN if id "ubuntu" &>/dev/null; then \
         userdel -f -r ubuntu; \
     fi
 
-# Bootstrap CA certificates from Tsinghua University over HTTP, then use
-# Tsinghua University over HTTPS for all subsequent package operations.
-RUN sed -i 's|http://archive.ubuntu.com/ubuntu/|http://mirrors.tuna.tsinghua.edu.cn/ubuntu/|g' /etc/apt/sources.list.d/ubuntu.sources \
-    && sed -i 's|http://security.ubuntu.com/ubuntu/|http://mirrors.tuna.tsinghua.edu.cn/ubuntu/|g' /etc/apt/sources.list.d/ubuntu.sources \
-    && sed -i 's/^Components:.*/Components: main/' /etc/apt/sources.list.d/ubuntu.sources \
-    && apt-get update \
+# Install base packages before local Features configure the APT mirror.
+RUN apt-get update \
     && apt-get -y install --no-install-recommends \
         ca-certificates \
-    && sed -i 's/^Components:.*/Components: main universe restricted multiverse/' /etc/apt/sources.list.d/ubuntu.sources \
-    && sed -i 's|http://mirrors.tuna.tsinghua.edu.cn/ubuntu/|https://mirrors.tuna.tsinghua.edu.cn/ubuntu/|g' /etc/apt/sources.list.d/ubuntu.sources \
-    && apt-get update \
-    && apt-get -y install --no-install-recommends \
         vim \
         curl \
         git \
