@@ -79,6 +79,7 @@
                 "eamodio.gitlens",
                 "esbenp.prettier-vscode",
                 "chrisvltn.log-wrapper-for-vscode",
+                "rust-lang.rust-analyzer",
                 "32757468.attentive-vscode"
             ]
         }
