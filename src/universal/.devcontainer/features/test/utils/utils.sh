@@ -96,6 +96,37 @@ EOF
         "-fsSL https://example.com/ordinary-download -o ${TEST_ORDINARY_OUTPUT}" \
         "${TEST_CURL_LOG}"
     test ! -e "${runtime_dir}"
+
+    for proxy_argument in omitted empty; do
+        : >"${TEST_CURL_LOG}"
+        : >"${TEST_WGET_LOG}"
+
+        if [[ "${proxy_argument}" == omitted ]]; then
+            launcher="$(download_install_script_with_github_proxy \
+                https://example.test/install.sh)"
+        else
+            launcher="$(download_install_script_with_github_proxy \
+                https://example.test/install.sh "")"
+        fi
+
+        runtime_dir="$(dirname "${launcher}")"
+        grep -Fq \
+            "https://github.com/example/tool/releases/download/v1.2.3/tool.tar.gz" \
+            "${runtime_dir}/install.sh"
+
+        sh "${launcher}"
+
+        grep -Fq -- \
+            "-fsSL --retry 3 https://github.com/example/dynamic-tool/releases/download/v2.0.0/tool.tar.gz -o ${TEST_CURL_OUTPUT}" \
+            "${TEST_CURL_LOG}"
+        grep -Fq -- \
+            "-qO ${TEST_WGET_OUTPUT} https://github.com/example/dynamic-tool/releases/download/v2.0.0/tool.tar.gz" \
+            "${TEST_WGET_LOG}"
+        grep -Fq -- \
+            "-fsSL https://example.com/ordinary-download -o ${TEST_ORDINARY_OUTPUT}" \
+            "${TEST_CURL_LOG}"
+        test ! -e "${runtime_dir}"
+    done
 '
 
 reportResults

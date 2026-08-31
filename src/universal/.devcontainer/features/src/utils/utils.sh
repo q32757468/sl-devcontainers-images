@@ -107,13 +107,14 @@ install_lifecycle_script() {
     install -m 0755 "${source_script}" "${runtime_dir}/${lifecycle_name}.sh"
 }
 
-# Download an install script and prefix its GitHub Release download URLs with
-# the supplied proxy URL. Runtime curl/wget calls are wrapped as well, so URLs
-# obtained dynamically from an API or manifest are also proxied. Prints the
-# path to a self-cleaning local launcher.
+# Download an install script and optionally prefix its GitHub Release download
+# URLs with the supplied proxy URL. Runtime curl/wget calls are wrapped as well,
+# so URLs obtained dynamically from an API or manifest are also proxied. An
+# omitted or empty proxy URL leaves downloads unchanged. Prints the path to a
+# self-cleaning local launcher.
 download_install_script_with_github_proxy() {
-    local script_url="${1:?Usage: download_install_script_with_github_proxy <script-url> <proxy-url>}"
-    local proxy_url="${2:?Usage: download_install_script_with_github_proxy <script-url> <proxy-url>}"
+    local script_url="${1:?Usage: download_install_script_with_github_proxy <script-url> [proxy-url]}"
+    local proxy_url="${2:-}"
     local runtime_dir
     local downloaded_script
     local rewritten_script
@@ -121,7 +122,9 @@ download_install_script_with_github_proxy() {
     local downloader
     local downloader_path
 
-    proxy_url="${proxy_url%/}/"
+    if [[ -n "${proxy_url}" ]]; then
+        proxy_url="${proxy_url%/}/"
+    fi
     runtime_dir="$(mktemp -d "${TMPDIR:-/tmp}/proxied-installer.XXXXXX")"
     downloaded_script="${runtime_dir}/install.sh.download"
     rewritten_script="${runtime_dir}/install.sh"
