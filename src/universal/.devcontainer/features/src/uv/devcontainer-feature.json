@@ -2,6 +2,16 @@
     "id": "uv",
     "version": "1.0.0",
     "name": "uv",
+    "installsAfter": [
+        "./utils"
+    ],
+    "options": {
+        "githubMirror": {
+            "type": "string",
+            "default": "https://gh.hihsl.cn/",
+            "description": "URL prefix used to accelerate downloads from GitHub. Set to an empty string to download directly."
+        }
+    },
     "containerEnv": {
         "UV_INSTALL_DIR": "/usr/local/share/uv",
         "PATH": "/usr/local/share/uv:${PATH}",
