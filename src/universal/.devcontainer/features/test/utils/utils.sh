@@ -13,7 +13,7 @@ check "utils-functions" bash -c '
     declare -F download_install_script_with_github_proxy >/dev/null
 '
 
-check "persistent-directory-link-idempotency-and-migration" bash -c '
+check "persistent-directory-link-idempotency-and-empty-directory" bash -c '
     set -e
     source /usr/local/share/devcontainer-features/utils/utils.sh
 
@@ -23,19 +23,13 @@ check "persistent-directory-link-idempotency-and-migration" bash -c '
     trap '\''rm -rf -- "${native_root}" "${HOME}/.sl-cache/.persistent-link-test"'\'' EXIT
 
     rm -rf -- "${native_root}" "${HOME}/.sl-cache/.persistent-link-test"
-    mkdir -p "${native_path}/nested" "${storage_path}/nested"
-    printf '\''from-image\n'\'' >"${native_path}/native-only"
-    printf '\''from-image\n'\'' >"${native_path}/nested/conflict"
-    printf '\''from-volume\n'\'' >"${storage_path}/nested/conflict"
-    printf '\''persistent\n'\'' >"${storage_path}/persistent-only"
+    mkdir -p "${native_path}"
 
     link_persistent_directory cache "${native_path}"
 
     test -L "${native_path}"
     test "$(readlink "${native_path}")" = "${storage_path}"
-    grep -Fxq from-image "${storage_path}/native-only"
-    grep -Fxq from-volume "${storage_path}/nested/conflict"
-    grep -Fxq persistent "${storage_path}/persistent-only"
+    test -d "${storage_path}"
 
     link_persistent_directory cache "${native_path}"
     rm -rf -- "${storage_path}"
@@ -66,19 +60,18 @@ check "persistent-directory-link-rejects-unsafe-paths" bash -c '
     fi
 '
 
-check "persistent-directory-link-preserves-source-on-copy-failure" bash -c '
+check "persistent-directory-link-rejects-nonempty-directory" bash -c '
     set -e
     source /usr/local/share/devcontainer-features/utils/utils.sh
 
-    native_path="${HOME}/.persistent-link-copy-failure"
-    storage_path="${HOME}/.sl-cache/.persistent-link-copy-failure"
+    native_path="${HOME}/.persistent-link-nonempty"
+    storage_path="${HOME}/.sl-cache/.persistent-link-nonempty"
     trap '\''rm -rf -- "${native_path}" "${storage_path}"'\'' EXIT
     mkdir -p "${native_path}"
     printf '\''must-survive\n'\'' >"${native_path}/data"
 
-    _copy_missing_directory_entries() { return 1; }
     if link_persistent_directory cache "${native_path}"; then
-        echo "Persistent link unexpectedly succeeded after a copy failure." >&2
+        echo "A nonempty persistent path was unexpectedly replaced." >&2
         exit 1
     fi
 

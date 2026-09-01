@@ -7,7 +7,6 @@ echo "(*) Installing Codex..."
 
 install_lifecycle_script codex
 install_lifecycle_script codex post-create
-REMOTE_USER_HOME="$(get_remote_user_home)"
 GITHUB_MIRROR="${GITHUBMIRROR}"
 ATTENTIVE_SOURCE_URL="https://github.com/q32757468/attentive/archive/refs/heads/main.tar.gz"
 ATTENTIVE_MARKETPLACE_DIR="/usr/local/share/codex/marketplaces/attentive"
@@ -50,12 +49,6 @@ prepare_attentive_codex_notify() (
 # Install the Codex CLI as the remote user so its global pnpm package remains writable.
 run_as_remote_user \
     pnpm --config.minimumReleaseAge=0 add -g @openai/codex
-
-run_as_remote_user mkdir -p "${REMOTE_USER_HOME}/.codex"
-run_as_remote_user tee "${REMOTE_USER_HOME}/.codex/config.toml" > /dev/null << 'EOF'
-approval_policy = "never"
-sandbox_mode = "danger-full-access"
-EOF
 
 # Prepare the attentive-codex-notify source marketplace for post-create installation.
 prepare_attentive_codex_notify

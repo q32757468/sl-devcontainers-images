@@ -25,35 +25,12 @@ run_as_remote_user() {
         "$@"
 }
 
-# Recursively copy entries that do not already exist at the destination.
-# Run in a subshell so dotglob/nullglob do not leak into the caller.
-_copy_missing_directory_entries() (
-    local source_directory="${1:?Usage: _copy_missing_directory_entries <source> <destination>}"
-    local destination_directory="${2:?Usage: _copy_missing_directory_entries <source> <destination>}"
-    local source_entry
-    local destination_entry
-
-    shopt -s dotglob nullglob
-    for source_entry in "${source_directory}"/*; do
-        destination_entry="${destination_directory}/${source_entry##*/}"
-        if [[ ! -e "${destination_entry}" && ! -L "${destination_entry}" ]]; then
-            cp -a -- "${source_entry}" "${destination_entry}" || return 1
-        elif [[ -d "${source_entry}" && ! -L "${source_entry}" && \
-                -d "${destination_entry}" && ! -L "${destination_entry}" ]]; then
-            _copy_missing_directory_entries \
-                "${source_entry}" "${destination_entry}" || return 1
-        fi
-    done
-)
-
 # Store a directory in one of the shared config/cache roots and keep the
 # application's absolute path as a symlink to it.
 #
 # This is intended to run from onCreateCommand, after the persistent volumes
-# have been mounted, as the remote user. It is safe to run repeatedly. If an
-# application created the native directory while the image was being built,
-# files missing from persistent storage are migrated before it is replaced by
-# the symlink. Existing persistent files always win.
+# have been mounted, as the remote user. It is safe to run repeatedly. The
+# native path may already be an empty directory, but must not contain files.
 link_persistent_directory() {
     local storage_type="${1:?Usage: link_persistent_directory <config|cache> <absolute-path>}"
     local native_path="${2:?Usage: link_persistent_directory <config|cache> <absolute-path>}"
@@ -128,9 +105,10 @@ link_persistent_directory() {
     mkdir -p -- "${storage_path}" || return 1
 
     if [[ -d "${native_path}" ]]; then
-        _copy_missing_directory_entries \
-            "${native_path}" "${storage_path}" || return 1
-        rm -rf -- "${native_path}" || return 1
+        if ! rmdir -- "${native_path}" 2>/dev/null; then
+            echo "Persistent path exists and is not empty: ${native_path}." >&2
+            return 1
+        fi
     fi
 
     mkdir -p -- "${native_parent}" || return 1

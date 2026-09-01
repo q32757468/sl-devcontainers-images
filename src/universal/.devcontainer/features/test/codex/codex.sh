@@ -33,6 +33,18 @@ check "attentive-plugin-cache" bash -c '
     test -n "${manifest}"
     grep -Fq "\"name\": \"attentive-codex-notify\"" "${manifest}"
 '
+check "codex-managed-config-refresh" bash -c '
+    config="${HOME}/.codex/config.toml"
+    sed -i \
+        -e '\''s/^approval_policy = .*/approval_policy = "on-request"/'\'' \
+        -e '\''s/^sandbox_mode = .*/sandbox_mode = "read-only"/'\'' \
+        -e '\''1i model = "preserved-test-model"'\'' \
+        "${config}"
+    /usr/local/share/devcontainer-features/codex/post-create.sh
+    grep -Fxq '\''approval_policy = "never"'\'' "${config}"
+    grep -Fxq '\''sandbox_mode = "danger-full-access"'\'' "${config}"
+    grep -Fxq '\''model = "preserved-test-model"'\'' "${config}"
+'
 check "attentive-plugin-marketplace-migration" bash -c '
     config="${HOME}/.codex/config.toml"
     old_source="$(mktemp -d)"
