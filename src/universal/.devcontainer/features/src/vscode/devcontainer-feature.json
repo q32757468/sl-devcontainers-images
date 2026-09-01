@@ -7,6 +7,8 @@
         "./utils"
     ],
     "onCreateCommand": [
-        "/usr/local/share/devcontainer-features/vscode/on-create.sh"
+        "/usr/local/share/devcontainer-features/utils/link-persistent-directory.sh",
+        "cache",
+        ".vscode-server/extensions"
     ]
 }

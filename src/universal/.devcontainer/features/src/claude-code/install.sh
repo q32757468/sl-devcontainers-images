@@ -8,7 +8,6 @@ echo "(*) Installing Claude Code..."
 install_lifecycle_script claude-code
 install_lifecycle_script claude-code post-create
 REMOTE_USER_HOME="$(get_remote_user_home)"
-link_persistent_directory config "${REMOTE_USER_HOME}/.claude"
 
 # Feature install scripts run as root. Install the global package as the
 # remote user so that pnpm's node_modules stays writable after startup.

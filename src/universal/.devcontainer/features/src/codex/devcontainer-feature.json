@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "name": "Codex",
     "installsAfter": [
+        "./utils",
         "./pnpm"
     ],
     "options": {
@@ -23,6 +24,11 @@
             "target": "/tmp/codex-host",
             "type": "bind"
         }
+    ],
+    "onCreateCommand": [
+        "/usr/local/share/devcontainer-features/utils/link-persistent-directory.sh",
+        "config",
+        ".codex"
     ],
     "postStartCommand": [
         "/usr/local/share/devcontainer-features/codex/post-start.sh"

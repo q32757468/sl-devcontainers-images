@@ -25,12 +25,41 @@ run_as_remote_user() {
         "$@"
 }
 
+# Recursively copy entries that do not already exist at the destination.
+# Run in a subshell so dotglob/nullglob do not leak into the caller.
+_copy_missing_directory_entries() (
+    local source_directory="${1:?Usage: _copy_missing_directory_entries <source> <destination>}"
+    local destination_directory="${2:?Usage: _copy_missing_directory_entries <source> <destination>}"
+    local source_entry
+    local destination_entry
+
+    shopt -s dotglob nullglob
+    for source_entry in "${source_directory}"/*; do
+        destination_entry="${destination_directory}/${source_entry##*/}"
+        if [[ ! -e "${destination_entry}" && ! -L "${destination_entry}" ]]; then
+            cp -a -- "${source_entry}" "${destination_entry}" || return 1
+        elif [[ -d "${source_entry}" && ! -L "${source_entry}" && \
+                -d "${destination_entry}" && ! -L "${destination_entry}" ]]; then
+            _copy_missing_directory_entries \
+                "${source_entry}" "${destination_entry}" || return 1
+        fi
+    done
+)
+
 # Store a directory in one of the shared config/cache roots and keep the
 # application's absolute path as a symlink to it.
+#
+# This is intended to run from onCreateCommand, after the persistent volumes
+# have been mounted, as the remote user. It is safe to run repeatedly. If an
+# application created the native directory while the image was being built,
+# files missing from persistent storage are migrated before it is replaced by
+# the symlink. Existing persistent files always win.
 link_persistent_directory() {
     local storage_type="${1:?Usage: link_persistent_directory <config|cache> <absolute-path>}"
     local native_path="${2:?Usage: link_persistent_directory <config|cache> <absolute-path>}"
     local remote_user_home
+    local config_root
+    local cache_root
     local storage_root
     local relative_path
     local storage_path
@@ -58,30 +87,54 @@ link_persistent_directory() {
             ;;
     esac
 
-    remote_user_home="$(get_remote_user_home)"
-    storage_root="${remote_user_home}/.sl-${storage_type}"
-    if [[ "${native_path}" == "${remote_user_home}/"* ]]; then
-        relative_path="${native_path#"${remote_user_home}/"}"
-    else
-        relative_path="${native_path#/}"
-    fi
-    storage_path="${storage_root}/${relative_path}"
-    native_parent="$(dirname "${native_path}")"
-
-    if [[ -e "${native_path}" || -L "${native_path}" ]]; then
-        echo "Persistent path already exists: ${native_path}." >&2
+    remote_user_home="$(realpath --canonicalize-missing --no-symlinks -- \
+        "${HOME:?HOME must be set}")"
+    native_path="$(realpath --canonicalize-missing --no-symlinks -- "${native_path}")"
+    if [[ "${native_path}" != "${remote_user_home}/"* ]]; then
+        echo "Persistent path must be strictly inside HOME: ${native_path}." >&2
         return 1
     fi
 
-    install -d -m 0755 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" \
-        "${storage_root}" \
-        "$(dirname "${storage_path}")" \
-        "${storage_path}"
-    if [[ ! -d "${native_parent}" ]]; then
-        install -d -m 0755 -o "${_REMOTE_USER}" -g "${_REMOTE_USER}" "${native_parent}"
+    config_root="${remote_user_home}/.sl-config"
+    cache_root="${remote_user_home}/.sl-cache"
+    if [[ "${native_path}" == "${config_root}" || "${native_path}" == "${config_root}/"* || \
+          "${native_path}" == "${cache_root}" || "${native_path}" == "${cache_root}/"* ]]; then
+        echo "Persistent path must not overlap a persistent storage root: ${native_path}." >&2
+        return 1
     fi
+
+    storage_root="${remote_user_home}/.sl-${storage_type}"
+    relative_path="${native_path#"${remote_user_home}/"}"
+    storage_path="${storage_root}/${relative_path}"
+    native_parent="$(dirname "${native_path}")"
+
+    if [[ -L "${native_path}" ]]; then
+        if [[ "$(readlink -- "${native_path}")" == "${storage_path}" ]]; then
+            mkdir -p -- "${storage_path}" || return 1
+            return 0
+        fi
+
+        echo "Persistent path is already a different symlink: ${native_path}." >&2
+        return 1
+    fi
+
+    if [[ -e "${native_path}" ]]; then
+        if [[ ! -d "${native_path}" ]]; then
+            echo "Persistent path exists and is not a directory: ${native_path}." >&2
+            return 1
+        fi
+    fi
+
+    mkdir -p -- "${storage_path}" || return 1
+
+    if [[ -d "${native_path}" ]]; then
+        _copy_missing_directory_entries \
+            "${native_path}" "${storage_path}" || return 1
+        rm -rf -- "${native_path}" || return 1
+    fi
+
+    mkdir -p -- "${native_parent}" || return 1
     ln -s "${storage_path}" "${native_path}"
-    chown -h "${_REMOTE_USER}:${_REMOTE_USER}" "${native_path}"
 }
 
 # Install a Feature's lifecycle script (post-start.sh, post-create.sh, ...)

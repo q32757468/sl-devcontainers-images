@@ -21,6 +21,11 @@
     "containerEnv": {
         "PATH": "/usr/local/share/antigravity/bin:${PATH}"
     },
+    "onCreateCommand": [
+        "/usr/local/share/devcontainer-features/utils/link-persistent-directory.sh",
+        "config",
+        ".gemini"
+    ],
     "postStartCommand": [
         "/usr/local/share/devcontainer-features/antigravity/post-start.sh"
     ]

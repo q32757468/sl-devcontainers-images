@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "name": "Claude Code",
     "installsAfter": [
+        "./utils",
         "./pnpm"
     ],
     "options": {
@@ -18,6 +19,11 @@
             "target": "/tmp/claude-host",
             "type": "bind"
         }
+    ],
+    "onCreateCommand": [
+        "/usr/local/share/devcontainer-features/utils/link-persistent-directory.sh",
+        "config",
+        ".claude"
     ],
     "postCreateCommand": [
         "/usr/local/share/devcontainer-features/claude-code/post-create.sh"

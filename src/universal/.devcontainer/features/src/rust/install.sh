@@ -8,7 +8,6 @@ echo "(*) Installing Rust..."
 REMOTE_USER_HOME="$(get_remote_user_home)"
 REMOTE_CARGO_HOME="${REMOTE_USER_HOME}/.cargo"
 RUST_BIN_DIR="/usr/local/share/rust/bin"
-link_persistent_directory cache "${REMOTE_CARGO_HOME}/registry"
 
 run_as_remote_user sh -c "curl --proto '=https' --tlsv1.2 -sSf https://rsproxy.cn/rustup-init.sh | sh -s -- -y --no-modify-path --default-toolchain stable --profile minimal --component rust-analyzer,rust-src,rustfmt,clippy"
 
