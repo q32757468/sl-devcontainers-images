@@ -1,6 +1,6 @@
 ---
 name: init-devcontainer
-description: Create a Compose-backed Dev Container for sl-universal-image with fixed external config and cache volumes; never overwrite existing configs.
+description: Create a Compose-backed Dev Container for sl-universal-image with fixed config and cache volume names; never overwrite existing configs.
 ---
 
 # Initialize Devcontainer
@@ -21,7 +21,7 @@ Use `<image>` = `sl-universal-image:latest` by default, or the image the user su
    }
    ```
 
-Create `docker-compose.yml` with the two shared volumes declared as external:
+Create `docker-compose.yml` with the two shared volumes using their fixed names:
 
    ```yaml
    services:
@@ -31,9 +31,9 @@ Create `docker-compose.yml` with the two shared volumes declared as external:
 
    volumes:
      sl-config:
-       external: true
+       name: sl-config
      sl-cache:
-       external: true
+       name: sl-cache
    ```
 
-Do not inspect image metadata to discover volumes. Validate the JSON and confirm the Compose service, image, command, and exactly the `sl-config` and `sl-cache` external volume declarations. Do not create the external Docker volumes, add an `image` field to `devcontainer.json`, or overwrite either existing file.
+Do not inspect image metadata to discover volumes. Validate the JSON and confirm the Compose service, image, command, and exactly the `sl-config` and `sl-cache` named volume declarations. Do not create Docker volumes manually, add an `image` field to `devcontainer.json`, or overwrite either existing file.
