@@ -2,10 +2,14 @@
 
 source dev-container-features-test-lib
 
+check "vscode-entrypoint" test -x \
+    /usr/local/share/devcontainer-features/vscode/entrypoint.sh
 check "vscode-server-extensions-link" bash -c '
     test -L "${HOME}/.vscode-server/extensions"
     test "$(readlink "${HOME}/.vscode-server/extensions")" = "${HOME}/.sl-cache/.vscode-server/extensions"
 '
+check "vscode-entrypoint-idempotency" \
+    /usr/local/share/devcontainer-features/vscode/entrypoint.sh
 check "vscode-server-extensions-dir" test -d "${HOME}/.vscode-server/extensions"
 check "vscode-server-extensions-cache-dir" test -d "${HOME}/.sl-cache/.vscode-server/extensions"
 check "vscode-server-extensions-owner" bash -c '

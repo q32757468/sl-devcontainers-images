@@ -6,9 +6,5 @@
     "installsAfter": [
         "./utils"
     ],
-    "onCreateCommand": [
-        "/usr/local/share/devcontainer-features/utils/link-persistent-directory.sh",
-        "cache",
-        ".vscode-server/extensions"
-    ]
+    "entrypoint": "/usr/local/share/devcontainer-features/vscode/entrypoint.sh"
 }
