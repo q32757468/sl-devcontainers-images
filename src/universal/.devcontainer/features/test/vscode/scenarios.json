@@ -1,0 +1,14 @@
+{
+    "vscode": {
+        "image": "ubuntu:noble",
+        "remoteUser": "ubuntu",
+        "features": {
+            "utils": {},
+            "vscode": {}
+        },
+        "overrideFeatureInstallOrder": [
+            "./utils",
+            "./vscode"
+        ]
+    }
+}

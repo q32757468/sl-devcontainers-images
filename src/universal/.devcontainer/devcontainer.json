@@ -44,7 +44,8 @@
         },
         "./features/src/codex": {
             "cacheBuster": "1.5"
-        }
+        },
+        "./features/src/vscode": "latest"
     },
     "overrideFeatureInstallOrder": [
         "./features/src/apt-source",
@@ -62,7 +63,8 @@
         "./features/src/herdr",
         "./features/src/antigravity",
         "./features/src/claude-code",
-        "./features/src/codex"
+        "./features/src/codex",
+        "./features/src/vscode"
     ],
     "remoteUser": "${localEnv:LOGNAME}",
     "containerUser": "${localEnv:LOGNAME}",

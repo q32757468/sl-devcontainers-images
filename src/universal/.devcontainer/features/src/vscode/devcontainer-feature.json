@@ -1,0 +1,12 @@
+{
+    "id": "vscode",
+    "version": "1.0.0",
+    "name": "VS Code Server Extensions",
+    "description": "Persist VS Code Server extensions in the shared cache volume.",
+    "installsAfter": [
+        "./utils"
+    ],
+    "onCreateCommand": [
+        "/usr/local/share/devcontainer-features/vscode/on-create.sh"
+    ]
+}
