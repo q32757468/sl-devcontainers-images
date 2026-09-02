@@ -14,7 +14,7 @@ pnpm install
 source /usr/local/share/devcontainer-features/utils/utils.sh
 ```
 
-Feature 中安装任何工具或环境时，必须以容器用户身份安装，不得使用 `root`。
+Feature 中安装任何工具或环境（除了系统依赖）时，必须以容器用户身份安装，不得使用 `root`。
 
 ## 持久化卷
 
@@ -47,7 +47,7 @@ pnpm test:features
 
 Feature 测试位于 `src/universal/.devcontainer/features/test/<feature>/`。新增或修改 Feature 时，应同步维护对应的 scenario 和断言脚本。
 
-新增 Feature 测试的 `scenarios.json` 时，非必要不要添加 `apt-source` 和 `ghcr.nju.edu.cn/devcontainers/features/common-utils:2`，以免拖慢测试。若确认因系统依赖缺失等原因确有必要，必须同时添加二者，不得只添加其一。
+新增 Feature 测试的 `scenarios.json` 时，非必要不要添加 `apt-source` 和 `ghcr.nju.edu.cn/devcontainers/features/common-utils:2`，以免拖慢测试。涉及安装系统依赖时，必须添加 `apt-source` 以使用镜像；`common-utils:2` 本身也会安装系统依赖，使用时必须同时添加二者。
 
 启动完整 `universal` Dev Container 并运行集成测试：
 

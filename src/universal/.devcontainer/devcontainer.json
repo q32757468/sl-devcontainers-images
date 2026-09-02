@@ -27,6 +27,7 @@
         },
         "./features/src/uv": "latest",
         "./features/src/rust": "latest",
+        "./features/src/tauri-deps": "latest",
         "./features/src/utils": "latest",
         "./features/src/pnpm": {
             "cacheBuster": "1"
@@ -57,6 +58,7 @@
         "ghcr.nju.edu.cn/devcontainers/features/python",
         "./features/src/uv",
         "./features/src/rust",
+        "./features/src/tauri-deps",
         "./features/src/pnpm",
         "./features/src/agent-skills",
         "./features/src/github-cli",

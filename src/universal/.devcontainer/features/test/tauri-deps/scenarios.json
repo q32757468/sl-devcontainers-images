@@ -1,0 +1,14 @@
+{
+    "tauri-deps": {
+        "image": "ubuntu:noble",
+        "remoteUser": "ubuntu",
+        "features": {
+            "apt-source": {},
+            "tauri-deps": {}
+        },
+        "overrideFeatureInstallOrder": [
+            "./apt-source",
+            "./tauri-deps"
+        ]
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "id": "tauri-deps",
+    "version": "1.0.0",
+    "name": "Tauri Dependencies",
+    "description": "Install the system dependencies required to build Tauri applications.",
+    "installsAfter": [
+        "./rust"
+    ]
+}

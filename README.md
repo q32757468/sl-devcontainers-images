@@ -9,6 +9,7 @@
   - Node.js 24，并额外安装 Node.js 22
   - Python（使用系统提供的 Python 3.12）
   - Rust stable、rust-analyzer、rustfmt、Clippy 和 `rust-src`
+  - Tauri 应用构建所需的系统依赖
   - pnpm 和 uv
   - Claude Code、OpenAI Codex、agent-browser 及对应技能
 - 配置 npm、pnpm、pip 和 Cargo 镜像，加快依赖下载
