@@ -6,7 +6,7 @@ set -euo pipefail
 CODEX_DIR="${HOME}/.codex"
 CODEX_CONFIG="${CODEX_DIR}/config.toml"
 ATTENTIVE_MARKETPLACE_DIR="/usr/local/share/codex/marketplaces/attentive"
-ATTENTIVE_MARKETPLACE_NAME="attentive-codex-plugins"
+ATTENTIVE_MARKETPLACE_NAME="attentive"
 
 set_top_level_config_value() {
     local key="${1:?Usage: set_top_level_config_value <key> <TOML value>}"
@@ -34,4 +34,4 @@ echo "(*) Installing the attentive-codex-notify plugin..."
 # nothing to remove, hence the intentionally ignored exit status.
 codex plugin marketplace remove "${ATTENTIVE_MARKETPLACE_NAME}" >/dev/null 2>&1 || true
 codex plugin marketplace add "${ATTENTIVE_MARKETPLACE_DIR}"
-codex plugin add "attentive-codex-notify@${ATTENTIVE_MARKETPLACE_NAME}"
+codex plugin add "attentive-notify@${ATTENTIVE_MARKETPLACE_NAME}"

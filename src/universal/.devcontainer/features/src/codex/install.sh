@@ -35,12 +35,6 @@ prepare_attentive_codex_notify() (
     tar -xzf "${archive_path}" -C "${source_dir}"
 
     extracted_source_dir="${source_dir}/attentive-main"
-    if [[ ! -f "${extracted_source_dir}/.agents/plugins/marketplace.json" || \
-          ! -f "${extracted_source_dir}/plugins/attentive-codex-notify/.codex-plugin/plugin.json" ]]; then
-        echo "Fatal: The Attentive source archive does not contain the attentive-codex-notify marketplace files." >&2
-        exit 1
-    fi
-
     install -d -m 0755 "$(dirname "${ATTENTIVE_MARKETPLACE_DIR}")"
     rm -rf -- "${ATTENTIVE_MARKETPLACE_DIR}"
     mv "${extracted_source_dir}" "${ATTENTIVE_MARKETPLACE_DIR}"
