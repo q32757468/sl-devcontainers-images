@@ -1,6 +1,6 @@
 ---
 name: init-devcontainer
-description: Create a Compose-backed Dev Container for sl-universal-image, optionally tailored to a supported environment such as Tauri; never overwrite existing configs.
+description: Create a Compose-backed Dev Container for sl-universal-image, optionally tailored to a supported environment such as Tauri; preserve existing configs.
 ---
 
 # Initialize Devcontainer
@@ -67,3 +67,17 @@ services:
 volumes:
   node_modules:
 ```
+
+Create project-level VS Code settings at `.vscode/settings.json` to disable automatic forwarding of the Tauri development port:
+
+```json
+{
+  "remote.portsAttributes": {
+    "1420": {
+      "onAutoForward": "ignore"
+    }
+  }
+}
+```
+
+If the file exists, merge this setting while preserving other settings and comments.
