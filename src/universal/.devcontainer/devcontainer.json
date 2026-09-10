@@ -81,7 +81,11 @@
             "extensions": [
                 "-dbaeumer.vscode-eslint",
                 "-ms-python.autopep8",
+                "-ms-python.python",
+                "-ms-python.vscode-pylance",
+                "ms-python.vscode-python-envs",
                 "charliermarsh.ruff",
+                "astral-sh.ty",
                 "eamodio.gitlens",
                 "esbenp.prettier-vscode",
                 "chrisvltn.log-wrapper-for-vscode",
