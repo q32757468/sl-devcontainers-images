@@ -7,5 +7,6 @@ check "herdr" herdr --version
 check "herdr-install-dir" test -x /usr/local/share/herdr/bin/herdr
 check "herdr-install-owner" bash -c 'test "$(stat -c %U /usr/local/share/herdr/bin/herdr)" = "$(id -un)"'
 check "herdr-path" bash -c 'test "$(command -v herdr)" = "/usr/local/share/herdr/bin/herdr"'
+check "herdr-skill" test -d "${HOME}/.agents/skills/herdr"
 
 reportResults

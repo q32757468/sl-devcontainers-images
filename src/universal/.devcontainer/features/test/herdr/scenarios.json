@@ -8,6 +8,13 @@
             "apt-source": {},
             "ghcr.nju.edu.cn/devcontainers/features/common-utils:2": {},
             "utils": {},
+            "patch-node": {},
+            "ghcr.nju.edu.cn/devcontainers/features/node:2": {
+                "version": "24",
+                "pnpmVersion": "none",
+                "nodeGypDependencies": false
+            },
+            "pnpm": {},
             "herdr": {
                 "githubMirror": "https://gh.hihsl.cn/"
             }
@@ -17,6 +24,9 @@
             "./apt-source",
             "ghcr.nju.edu.cn/devcontainers/features/common-utils:2",
             "./utils",
+            "./patch-node",
+            "ghcr.nju.edu.cn/devcontainers/features/node:2",
+            "./pnpm",
             "./herdr"
         ]
     }
