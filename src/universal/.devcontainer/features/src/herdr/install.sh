@@ -17,7 +17,9 @@ run_as_remote_user env HERDR_INSTALL_DIR="${INSTALL_DIR}" "${INSTALL_SCRIPT}"
 
 run_as_remote_user "${INSTALL_DIR}/herdr" --version >/dev/null
 
-# Install the Herdr skill globally in the remote user's home.
-run_as_remote_user pnpx -y skills add herdrdev/herdr --skill herdr -y -g
+# Explicitly target Codex so the installer only writes to the shared
+# ~/.agents/skills directory instead of reusing another previously selected
+# agent-specific directory. Claude Code links the shared directory at runtime.
+run_as_remote_user pnpx -y skills add herdrdev/herdr --skill herdr -y -g -a codex
 
 echo "Done!"
