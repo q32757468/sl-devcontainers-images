@@ -37,7 +37,7 @@
         "./features/src/patch-node": "latest",
         "./features/src/patch-python": "latest",
         "./features/src/herdr": {
-            "cacheBuster": "1.2"
+            "cacheBuster": "1.3"
         },
         "./features/src/antigravity": {
             "cacheBuster": "1.1"
