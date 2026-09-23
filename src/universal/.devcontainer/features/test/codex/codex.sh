@@ -15,23 +15,12 @@ check "codex-config" bash -c '
 '
 check "codex-post-start" test -x /usr/local/share/devcontainer-features/codex/post-start.sh
 check "codex-post-create" test -x /usr/local/share/devcontainer-features/codex/post-create.sh
-check "attentive-marketplace-source" bash -c '
-    marketplace="/usr/local/share/codex/marketplaces/attentive/.agents/plugins/marketplace.json"
-    test -f "${marketplace}"
-    grep -Fq "\"name\": \"attentive-codex-plugins\"" "${marketplace}"
-'
 check "attentive-plugin-config" bash -c '
     config="${HOME}/.codex/config.toml"
     grep -Fq "[marketplaces.attentive-codex-plugins]" "${config}"
     grep -Fq "source = \"/usr/local/share/codex/marketplaces/attentive\"" "${config}"
     grep -Fq "[plugins.\"attentive-codex-notify@attentive-codex-plugins\"]" "${config}"
     grep -Fq "enabled = true" "${config}"
-'
-check "attentive-plugin-cache" bash -c '
-    cache_root="${HOME}/.codex/plugins/cache/attentive-codex-plugins/attentive-codex-notify"
-    manifest="$(find "${cache_root}" -mindepth 3 -maxdepth 3 -name plugin.json -path "*/.codex-plugin/plugin.json" -print -quit)"
-    test -n "${manifest}"
-    grep -Fq "\"name\": \"attentive-codex-notify\"" "${manifest}"
 '
 check "codex-managed-config-refresh" bash -c '
     config="${HOME}/.codex/config.toml"

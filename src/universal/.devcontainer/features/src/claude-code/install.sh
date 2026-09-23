@@ -12,7 +12,7 @@ REMOTE_USER_HOME="$(get_remote_user_home)"
 # Feature install scripts run as root. Install the global package as the
 # remote user so that pnpm's node_modules stays writable after startup.
 run_as_remote_user \
-    pnpm --config.minimumReleaseAge=0 --allow-build=@anthropic-ai/claude-code add -g @anthropic-ai/claude-code
+    pnpm add --config.minimum-release-age=0 --allow-build=@anthropic-ai/claude-code -g @anthropic-ai/claude-code
 
 # Write default user settings to skip onboarding
 cat > "${REMOTE_USER_HOME}/.claude.json" << 'EOF'

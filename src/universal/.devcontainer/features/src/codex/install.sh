@@ -42,7 +42,7 @@ prepare_attentive_codex_notify() (
 
 # Install the Codex CLI as the remote user so its global pnpm package remains writable.
 run_as_remote_user \
-    pnpm --config.minimumReleaseAge=0 add -g @openai/codex
+    pnpm add --config.minimum-release-age=0 -g @openai/codex
 
 # Prepare the attentive-codex-notify source marketplace for post-create installation.
 prepare_attentive_codex_notify
