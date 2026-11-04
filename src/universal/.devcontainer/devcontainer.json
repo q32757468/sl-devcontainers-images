@@ -37,10 +37,10 @@
         "./features/src/patch-node": "latest",
         "./features/src/patch-python": "latest",
         "./features/src/herdr": {
-            "cacheBuster": "1.4"
+            "cacheBuster": "1.92"
         },
         "./features/src/antigravity": {
-            "cacheBuster": "1.1"
+            "cacheBuster": "1.11"
         },
         "./features/src/claude-code": {
             "cacheBuster": "1.6"
