@@ -18,20 +18,10 @@
             "description": "Change this value to force a fresh Codex installation during image builds."
         }
     },
-    "mounts": [
-        {
-            "source": "${localEnv:HOME}/.codex",
-            "target": "/tmp/codex-host",
-            "type": "bind"
-        }
-    ],
     "onCreateCommand": [
         "/usr/local/share/devcontainer-features/utils/link-persistent-directory.sh",
         "config",
         ".codex"
-    ],
-    "postStartCommand": [
-        "/usr/local/share/devcontainer-features/codex/post-start.sh"
     ],
     "postCreateCommand": [
         "/usr/local/share/devcontainer-features/codex/post-create.sh"

@@ -5,7 +5,6 @@ source /usr/local/share/devcontainer-features/utils/utils.sh
 
 echo "(*) Installing Codex..."
 
-install_lifecycle_script codex
 install_lifecycle_script codex post-create
 GITHUB_MIRROR="${GITHUBMIRROR}"
 ATTENTIVE_SOURCE_URL="https://github.com/q32757468/attentive/archive/refs/heads/main.tar.gz"
