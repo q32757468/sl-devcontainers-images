@@ -3,6 +3,13 @@
     "version": "1.0.0",
     "name": "Magpie",
     "description": "Install Magpie and persist its configuration.",
+    "options": {
+        "cacheBuster": {
+            "type": "string",
+            "default": "",
+            "description": "Change this value to force a fresh Magpie installation during image builds."
+        }
+    },
     "installsAfter": [
         "./utils"
     ],

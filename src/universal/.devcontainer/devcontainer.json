@@ -36,7 +36,9 @@
         "./features/src/github-cli": "latest",
         "./features/src/patch-node": "latest",
         "./features/src/patch-python": "latest",
-        "./features/src/magpie": "latest",
+        "./features/src/magpie": {
+            "cacheBuster": "1"
+        },
         "./features/src/herdr": {
             "cacheBuster": "1.92"
         },
