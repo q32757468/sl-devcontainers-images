@@ -24,6 +24,7 @@ check "nvm" bash -c ". /usr/local/share/nvm/nvm.sh && nvm --version"
 check "pnpm" pnpm --version
 check "gh" gh --version
 check "codex" codex --version
+check "magpie" magpie --version
 check "herdr" herdr --version
 check "agy" agy --version
 check "claude" claude --version
@@ -53,6 +54,7 @@ check "persistent-volume-links" bash -c '
     set -e
     test "$(readlink "${HOME}/.codex")" = "${HOME}/.sl-config/.codex"
     test "$(readlink "${HOME}/.claude")" = "${HOME}/.sl-config/.claude"
+    test "$(readlink "${HOME}/.config/magpie")" = "${HOME}/.sl-config/.config/magpie"
     test "$(readlink "${HOME}/.gemini")" = "${HOME}/.sl-config/.gemini"
     test "$(readlink "${HOME}/.cargo/registry")" = "${HOME}/.sl-cache/.cargo/registry"
 '
@@ -69,6 +71,21 @@ check "claude-lifecycle" bash -c '
     test -L "${HOME}/.claude/skills"
     test "$(readlink "${HOME}/.claude/skills")" = "${HOME}/.agents/skills"
     test "$(jq -r ".permissions.defaultMode" "${HOME}/.claude/settings.json")" = "bypassPermissions"
+'
+check "magpie-lifecycle" bash -c '
+    set -e
+    test "${MAGPIE_ADDR}" = "127.0.0.1:3426"
+    test "$(jq -r ".noUpdatePill" "${HOME}/.config/magpie/settings.json")" = "true"
+    test "$(jq -r ".noAutoUpdate" "${HOME}/.config/magpie/settings.json")" = "true"
+    test "$(jq -r '\''.providers[] | select(.id == "host") | .preset'\'' "${HOME}/.config/magpie/providers.json")" = "remote-magpie"
+    for _ in $(seq 1 50); do
+        if magpie healthcheck; then
+            exit 0
+        fi
+        sleep 0.1
+    done
+    cat /tmp/magpie-serve.log >&2
+    exit 1
 '
 check "antigravity-yolo-config" bash -c '
     set -e

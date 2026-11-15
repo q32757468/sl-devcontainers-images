@@ -11,7 +11,7 @@
   - Rust stable、rust-analyzer、rustfmt、Clippy 和 `rust-src`
   - Tauri 应用构建所需的系统依赖
   - pnpm 和 uv
-  - Claude Code、OpenAI Codex、agent-browser 及对应技能
+  - Claude Code、OpenAI Codex、Magpie、agent-browser 及对应技能
 - 配置 npm、pnpm、pip 和 Cargo 镜像，加快依赖下载
 - 提供 VS Code 常用扩展配置
 - 使用 `sl-config` 和 `sl-cache` 两个共享卷分别持久化用户配置与缓存

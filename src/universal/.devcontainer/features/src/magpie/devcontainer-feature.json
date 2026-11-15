@@ -1,0 +1,24 @@
+{
+    "id": "magpie",
+    "version": "1.0.0",
+    "name": "Magpie",
+    "description": "Install Magpie and persist its configuration.",
+    "installsAfter": [
+        "./utils"
+    ],
+    "containerEnv": {
+        "MAGPIE_ADDR": "127.0.0.1:3426",
+        "PATH": "/usr/local/share/magpie/bin:${PATH}"
+    },
+    "onCreateCommand": [
+        "/usr/local/share/devcontainer-features/utils/link-persistent-directory.sh",
+        "config",
+        ".config/magpie"
+    ],
+    "postCreateCommand": [
+        "/usr/local/share/devcontainer-features/magpie/post-create.sh"
+    ],
+    "postStartCommand": [
+        "/usr/local/share/devcontainer-features/magpie/post-start.sh"
+    ]
+}
