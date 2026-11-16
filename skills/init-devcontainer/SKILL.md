@@ -68,15 +68,11 @@ volumes:
   node_modules:
 ```
 
-Create project-level VS Code settings at `.vscode/settings.json` to disable automatic forwarding of the Tauri development port:
+Create project-level VS Code settings at `.vscode/settings.json` to disable VS Code's automatic port forwarding for the Tauri environment:
 
 ```json
 {
-  "remote.portsAttributes": {
-    "1420": {
-      "onAutoForward": "ignore"
-    }
-  }
+  "remote.autoForwardPorts": false
 }
 ```
 
