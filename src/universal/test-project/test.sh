@@ -27,7 +27,6 @@ check "codex" codex --version
 check "magpie" magpie --version
 check "herdr" herdr --version
 check "agy" agy --version
-check "claude" claude --version
 check "agent-browser" agent-browser --version
 check "python3" python3 --version
 check "pip3" pip3 --version
@@ -48,12 +47,10 @@ check "remote-user-homes" bash -c '
     test -z "${CARGO_HOME:-}"
     test -d "${HOME}/.cargo"
     test -d "${HOME}/.codex"
-    test -d "${HOME}/.claude"
 '
 check "persistent-volume-links" bash -c '
     set -e
     test "$(readlink "${HOME}/.codex")" = "${HOME}/.sl-config/.codex"
-    test "$(readlink "${HOME}/.claude")" = "${HOME}/.sl-config/.claude"
     test "$(readlink "${HOME}/.config/magpie")" = "${HOME}/.sl-config/.config/magpie"
     test "$(readlink "${HOME}/.gemini")" = "${HOME}/.sl-config/.gemini"
     test "$(readlink "${HOME}/.cargo/registry")" = "${HOME}/.sl-cache/.cargo/registry"
@@ -64,13 +61,6 @@ check "codex-final-config" bash -c '
     test -f "$config"
     grep -Fxq "approval_policy = \"never\"" "$config"
     grep -Fxq "sandbox_mode = \"danger-full-access\"" "$config"
-'
-check "claude-lifecycle" bash -c '
-    set -e
-    test -f "${HOME}/.claude/settings.json"
-    test -L "${HOME}/.claude/skills"
-    test "$(readlink "${HOME}/.claude/skills")" = "${HOME}/.agents/skills"
-    test "$(jq -r ".permissions.defaultMode" "${HOME}/.claude/settings.json")" = "bypassPermissions"
 '
 check "magpie-lifecycle" bash -c '
     set -e

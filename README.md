@@ -11,7 +11,7 @@
   - Rust stable、rust-analyzer、rustfmt、Clippy 和 `rust-src`
   - Tauri 应用构建所需的系统依赖
   - pnpm 和 uv
-  - Claude Code、OpenAI Codex、Magpie、agent-browser 及对应技能
+  - OpenAI Codex、Magpie、agent-browser 及对应技能
 - 配置 npm、pnpm、pip 和 Cargo 镜像，加快依赖下载
 - 提供 VS Code 常用扩展配置
 - 使用 `sl-config` 和 `sl-cache` 两个共享卷分别持久化用户配置与缓存
@@ -109,6 +109,6 @@ pnpm run test:universal
 ## 注意事项
 
 - `devcontainer.json` 使用宿主机的 `LOGNAME` 作为容器用户，并将 UID/GID 配置为 `1000`；运行命令前请确认该环境变量和 Docker 用户配置符合预期。
-- Claude Code 和 Codex 会挂载宿主机对应的配置目录；认证文件不会被写入 Git 仓库。
+- Codex 会挂载宿主机对应的配置目录；认证文件不会被写入 Git 仓库。
 - 当前 npm、pnpm、pip 和 Cargo 使用的镜像地址写在对应的本地 Feature 中。如需更换，请同步更新 Feature 配置和相关测试。
 - 测试依赖 Docker，且会删除带有 `test-container=universal` 标签的旧测试容器。

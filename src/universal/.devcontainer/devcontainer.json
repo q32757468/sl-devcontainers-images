@@ -45,9 +45,6 @@
         "./features/src/antigravity": {
             "cacheBuster": "1.11"
         },
-        "./features/src/claude-code": {
-            "cacheBuster": "1.6"
-        },
         "./features/src/codex": {
             "cacheBuster": "1.5"
         },
@@ -70,7 +67,6 @@
         "./features/src/magpie",
         "./features/src/herdr",
         "./features/src/antigravity",
-        "./features/src/claude-code",
         "./features/src/codex",
         "./features/src/vscode"
     ],
