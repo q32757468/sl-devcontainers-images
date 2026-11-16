@@ -36,11 +36,11 @@
         "./features/src/github-cli": "latest",
         "./features/src/patch-node": "latest",
         "./features/src/patch-python": "latest",
-        "./features/src/magpie": {
-            "cacheBuster": "1"
-        },
         "./features/src/herdr": {
             "cacheBuster": "1.92"
+        },
+        "./features/src/magpie": {
+            "cacheBuster": "1"
         },
         "./features/src/antigravity": {
             "cacheBuster": "1.11"
@@ -64,8 +64,8 @@
         "./features/src/pnpm",
         "./features/src/agent-skills",
         "./features/src/github-cli",
-        "./features/src/magpie",
         "./features/src/herdr",
+        "./features/src/magpie",
         "./features/src/antigravity",
         "./features/src/codex",
         "./features/src/vscode"
